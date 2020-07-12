@@ -8,7 +8,7 @@ import ui.base.MvpPresenter;
 
 public interface CalendarMvpPresenter<V extends CalendarMvpView, I extends CalendarMvpInteractor & MvpInteractor>
         extends MvpPresenter<V, I> {
-
+    void onViewPrepared();
 }
 
 

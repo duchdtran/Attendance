@@ -1,15 +1,10 @@
 package ui.meeting;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +23,7 @@ import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
 import ui.base.FilterDialog;
-import ui.profile.ProfileActivity;
+import ui.meeting.detail.MeetingDetailActivity;
 
 public class MeetingActivity extends BaseActivity implements MeetingMvpView {
 
@@ -66,8 +61,8 @@ public class MeetingActivity extends BaseActivity implements MeetingMvpView {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.option_meeting_session, menu);
-
+        getMenuInflater().inflate(R.menu.option_menu, menu);
+        menu.setGroupVisible(R.id.group_meeting_session, true);
         final SearchView searchView = (SearchView) menu.findItem(R.id.option_search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -114,8 +109,16 @@ public class MeetingActivity extends BaseActivity implements MeetingMvpView {
         adapter = new MeetingAdapter(meetingList);
         if (adapter != null) {
             recyclerView.setAdapter(adapter);
+            recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
+            adapter.setOnItemClickListener(new MeetingAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int posision) {
+                    Toast.makeText(MeetingActivity.this, "Clicked "+posision, Toast.LENGTH_SHORT).show();
+                    openMeetingDetailActivity(posision);
+                }
+            });
         }
     }
 
@@ -123,5 +126,12 @@ public class MeetingActivity extends BaseActivity implements MeetingMvpView {
     public void updateAdapter() {
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void openMeetingDetailActivity(int position) {
+        Intent intent = MeetingDetailActivity.getStartIntent(MeetingActivity.this);
+
+        startActivity(intent);
     }
 }

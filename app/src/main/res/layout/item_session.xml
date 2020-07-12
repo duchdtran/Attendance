@@ -30,12 +30,20 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:text="Meeting minutes"
+            android:text="Họp giao ban"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/view_status"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tv_meeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Meeting minutes"
+            app:layout_constraintStart_toEndOf="@+id/view_status"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
@@ -44,7 +52,7 @@
             android:text="13:30 27/06"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view_status"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_meeting" />
 
         <TextView
             android:id="@+id/tv_address"

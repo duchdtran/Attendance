@@ -15,6 +15,9 @@
 
 package ui.home.calendar;
 
+import java.util.List;
+
+import data.model.SessionDto;
 import ui.base.MvpView;
 
 /**
@@ -22,6 +25,8 @@ import ui.base.MvpView;
  */
 
 public interface CalendarMvpView extends MvpView {
-
+    void updateSession(List<SessionDto> sessionList);
+    void initRecycle(List<SessionDto> sessionList);
+    void updateAdapter();
 
 }

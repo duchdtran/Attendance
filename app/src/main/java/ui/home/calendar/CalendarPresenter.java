@@ -15,6 +15,9 @@
 
 package ui.home.calendar;
 
+import java.util.List;
+
+import data.model.SessionDto;
 import ui.base.BasePresenter;
 
 /**
@@ -30,4 +33,9 @@ public class CalendarPresenter<V extends CalendarMvpView,
     }
 
 
+    @Override
+    public void onViewPrepared() {
+        List<SessionDto> meetingList = getInteractor().getAllSession();
+        getMvpView().initRecycle(meetingList);
+    }
 }

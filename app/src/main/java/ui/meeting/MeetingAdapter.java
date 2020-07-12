@@ -1,7 +1,6 @@
 
 package ui.meeting;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_NORMAL = 1;
 
     private Callback mCallback;
+    private OnItemClickListener mListener;
     private List<MeetingDto> meetingList;
     ArrayList<MeetingDto> arr;
 
@@ -42,7 +42,9 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void setCallback(Callback callback) {
         mCallback = callback;
     }
-
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.onBind(position);
@@ -50,15 +52,15 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+        View view;
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
-                return new ViewHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meeting, parent, false));
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meeting, parent, false);
+                return new ViewHolder(view, mListener);
             case VIEW_TYPE_EMPTY:
             default:
-                return new EmptyViewHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_view, parent, false));
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_view, parent, false);
+                return new EmptyViewHolder(view);
         }
     }
 
@@ -88,17 +90,38 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public interface Callback {
         void onRepoEmptyViewRetryClick();
     }
+    public interface OnItemClickListener{
+        void onItemClick(int posision);
+    }
     public class ViewHolder extends BaseViewHolder {
         View viewStatus;
         TextView tvName,tvTime,tvAddress;
         ImageButton btnMore;
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvTime = itemView.findViewById(R.id.tv_time);
             tvAddress = itemView.findViewById(R.id.tv_address);
             viewStatus = itemView.findViewById(R.id.view_status);
             btnMore = itemView.findViewById(R.id.btn_more);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+            btnMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
         @Override
@@ -114,8 +137,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (meetingDto.getName() != null) {
                 String nameM=meetingDto.getName();
                 String tmp="";
-                if(nameM.length()>20){
-                    int j=20;
+                if(nameM.length()>30){
+                    int j=30;
                     for(;j>=0;j--){
                         char c = nameM.charAt(j);
                         if((int) c==32) break;
@@ -132,8 +155,8 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (meetingDto.getAddress()!= null) {
                 String nameM=meetingDto.getAddress();
                 String tmp="";
-                if(nameM.length()>14){
-                    int j=14;
+                if(nameM.length()>20){
+                    int j=20;
                     for(;j>=0;j--){
                         char c = nameM.charAt(j);
                         if((int) c==32) break;
@@ -148,12 +171,6 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (meetingDto.getTimeStart()!= null) {
                 tvTime.setText(meetingDto.getTimeStart());
             }
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("AAA",position+"pos");
-                }
-            });
         }
     }
 

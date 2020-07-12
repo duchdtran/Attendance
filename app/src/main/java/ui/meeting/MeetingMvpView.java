@@ -10,4 +10,6 @@ public interface MeetingMvpView extends MvpView {
     void updateMeeting(List<MeetingDto> meetingList);
     void initRecycle(List<MeetingDto> meetingList);
     void updateAdapter();
+
+    void openMeetingDetailActivity(int position);
 }

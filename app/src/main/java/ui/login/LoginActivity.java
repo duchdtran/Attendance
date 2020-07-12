@@ -49,15 +49,15 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
             public void onClick(View v) {
                  mPresenter.setErrorInput(textInputEmail);
                  mPresenter.setErrorInput(textInputPassword);
-                if(userName.getText().toString().length()>0&&passWord.getText().toString().length()>0)onServerLoginClick();
+                if(userName.getText().toString().length()>0 && passWord.getText().toString().length()>0)
+                    onServerLoginClick();
             }
         }
         );
     }
 
     void onServerLoginClick() {
-        mPresenter.onServerLoginClick(userName.getText().toString(),
-                passWord.getText().toString());
+        mPresenter.onServerLoginClick(userName.getText().toString(), passWord.getText().toString());
     }
 
     @Override

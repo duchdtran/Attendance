@@ -1,47 +1,51 @@
-package ui.session;
+package ui.home.calendar;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ubnd.attendance.R;
 
+import java.text.DateFormat;
 import java.text.Normalizer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
 import data.model.SessionDto;
 import ui.base.BaseViewHolder;
+import ultils.AppConstants;
 
-public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class CalendarAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_NORMAL = 1;
 
-    private SessionAdapter.Callback mCallback;
-    private SessionAdapter.OnItemClickListener mListener;
+    private ui.session.SessionAdapter.Callback mCallback;
     private List<SessionDto> sessionList;
     ArrayList<SessionDto> arr;
 
-    public SessionAdapter(List<SessionDto> sessionList) {
+    public CalendarAdapter(List<SessionDto> sessionList) {
         this.sessionList = sessionList;
         this.arr=new ArrayList<SessionDto>();
         this.arr.addAll(sessionList);
     }
 
-    public void setCallback(SessionAdapter.Callback callback) {
+    public void setCallback(ui.session.SessionAdapter.Callback callback) {
         mCallback = callback;
-    }
-    public void setOnItemClickListener(SessionAdapter.OnItemClickListener listener){
-        mListener = listener;
     }
 
     @Override
@@ -51,15 +55,15 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
+
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_session, parent, false);
-                return new SessionAdapter.ViewHolder(view, mListener);
+                return new CalendarAdapter.ViewHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_session_calendar, parent, false));
             case VIEW_TYPE_EMPTY:
             default:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_view, parent, false);
-                return new SessionAdapter.EmptyViewHolder(view);
+                return new CalendarAdapter.EmptyViewHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empty_view, parent, false));
         }
     }
 
@@ -89,33 +93,19 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public interface Callback {
         void onRepoEmptyViewRetryClick();
     }
-    public interface OnItemClickListener{
-        void onItemClick(int posision);
-    }
     public class ViewHolder extends BaseViewHolder {
         View viewStatus;
         TextView tvName, tvMeeting, tvTime,tvAddress;
-        ImageButton btnMore;
-        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        Button btnAttendance;
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
             tvMeeting = itemView.findViewById(R.id.tv_meeting);
             tvTime = itemView.findViewById(R.id.tv_time);
             tvAddress = itemView.findViewById(R.id.tv_address);
             viewStatus = itemView.findViewById(R.id.view_status);
-            btnMore = itemView.findViewById(R.id.btn_more);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+            btnAttendance = itemView.findViewById(R.id.btn_attendance);
         }
 
         @Override
@@ -180,9 +170,33 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 else tmp = nameM;
                 tvAddress.setText(tmp);
             }
-            if (sessionDto.getTimeStart()!= null) {
-                tvTime.setText(sessionDto.getTimeStart());
+            if (sessionDto.getTimeStart()!= null && sessionDto.getTimeEnd() != null) {
+                String timeString = "";
+                String timeStart, timeEnd;
+
+                try {
+                    DateFormat sdfDate = new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT);
+                    DateFormat sdfTime = new SimpleDateFormat(AppConstants.TIME_FORMAT);
+
+                    Date date;
+                    date = sdfDate.parse(sessionDto.getTimeStart());
+                    timeStart = sdfTime.format(date);
+
+                    date = sdfDate.parse(sessionDto.getTimeEnd());
+                    timeEnd = sdfTime.format(date);
+
+
+                    tvTime.setText(timeStart + " - " + timeEnd);
+                }catch (ParseException e){
+                    Log.e("AAA", "Lỗi chuyển đổi thời gian");
+                }
             }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("AAA",position+"pos");
+                }
+            });
         }
     }
 
@@ -220,4 +234,5 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
 }
+
 
