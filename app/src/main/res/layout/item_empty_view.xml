@@ -54,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:text="Tải lại"
         android:textColor="#ffff"
-        android:background="@drawable/border_button"
+        android:background="@drawable/bg_button"
         android:backgroundTint="#041BA7"
         android:textSize="20sp" />
 </LinearLayout>

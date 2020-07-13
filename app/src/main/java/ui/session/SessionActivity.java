@@ -24,6 +24,7 @@ import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
 import ui.base.FilterDialog;
 import ui.session.detail.SessionDetailActivity;
+import ui.session.detail.SessionDetailDialog;
 
 public class SessionActivity extends BaseActivity implements SessionMvpView {
 
@@ -114,7 +115,8 @@ public class SessionActivity extends BaseActivity implements SessionMvpView {
             adapter.setOnItemClickListener(new SessionAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int posision) {
-                    openSessionDetailActivity(posision);
+                    //openSessionDetailActivity(posision);
+                    openSessionDetailDialog(posision);
                 }
             });
         }
@@ -130,5 +132,11 @@ public class SessionActivity extends BaseActivity implements SessionMvpView {
     public void openSessionDetailActivity(int position) {
         Intent intent = SessionDetailActivity.getStartIntent(SessionActivity.this);
         startActivity(intent);
+    }
+
+    @Override
+    public void openSessionDetailDialog(int position) {
+        SessionDetailDialog dialog = new SessionDetailDialog();
+        dialog.show(getSupportFragmentManager(), "SessionDetailDialog");
     }
 }
