@@ -21,7 +21,9 @@
         android:id="@+id/group_detail"
         android:visible="false">
 
-
+        <item android:id="@+id/option_scan"
+            app:showAsAction="always"
+            android:title="Scan QR Code"
+            android:icon="@drawable/ic_scan"/>
     </group>
-
 </menu>
