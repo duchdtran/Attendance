@@ -2,6 +2,7 @@ package ui.session;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ubnd.attendance.R;
@@ -21,6 +23,7 @@ import java.util.regex.Pattern;
 
 import data.model.app.SessionDto;
 import ui.base.BaseViewHolder;
+import ui.meeting.detail.MeetingDetailActivity;
 import ui.session.detail.SessionDetailDialog;
 
 public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -109,17 +112,17 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             viewStatus = itemView.findViewById(R.id.view_status);
             btnMore = itemView.findViewById(R.id.btn_more);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null) {
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION) {
+//                            listener.onItemClick(position);
+//                        }
+//                    }
+//                }
+//            });
         }
 
         @Override
@@ -132,7 +135,7 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         public void onBind(final int position) {
             super.onBind(position);
-            SessionDto sessionDto = sessionList.get(position);
+            final SessionDto sessionDto = sessionList.get(position);
             if (sessionDto.getName() != null) {
                 String nameM=sessionDto.getName();
                 String tmp="";
@@ -187,6 +190,16 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (sessionDto.getTimeStart()!= null) {
                 tvTime.setText(sessionDto.getTimeStart());
             }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SessionDetailDialog dialog = new SessionDetailDialog();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("session", sessionDto);
+                    dialog.setArguments(bundle);
+                    dialog.show(((FragmentActivity)context).getSupportFragmentManager(), "SessionDetailDialog");
+                }
+            });
         }
     }
 

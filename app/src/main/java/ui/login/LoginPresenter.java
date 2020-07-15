@@ -51,7 +51,7 @@ public class LoginPresenter<V extends LoginMvpView, I extends LoginMvpInteractor
                             String token = jsonObject.getString("token");
                             UserDto userDto = new UserDto(userId, fullName, email, phone, address);
                             getInteractor().getPreferencesHelper().setUser(userDto, token);
-                            //updateData();
+                            updateData();
                             getMvpView().openHomeActivity();
                         } else{
                             getMvpView().showMessage("Đăng nhập không thành công");

@@ -14,7 +14,7 @@ import data.network.Callback;
 import ui.base.MvpInteractor;
 
 public interface CalendarMvpInteractor extends MvpInteractor {
-    ArrayList<SessionDto> getAllSession();
+    ArrayList<SessionDto> getSessionByDate(int day, int month, int year);
     public void importSessionService(JSONArray jsonArray, final Context context, final Callback volley);
 
 

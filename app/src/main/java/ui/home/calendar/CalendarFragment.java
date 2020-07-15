@@ -64,7 +64,7 @@ public class CalendarFragment extends BaseFragment implements
                 tvListSesstion.setText(String.format("Lịch họp ngày %d tháng %d năm %d",day.getDay(), day.getMonth()+1, day.getYear()));
                 Log.i(getClass().getName(), "Selected Day: "
                         + day.getYear() + "/" + (day.getMonth() + 1) + "/" + day.getDay());
-                mPresenter.onViewPrepared();
+                mPresenter.onViewPrepared(day.getYear(), (day.getMonth() + 1), day.getDay());
             }
 
             @Override
@@ -99,7 +99,8 @@ public class CalendarFragment extends BaseFragment implements
         });
         Day day = collapsibleCalendar.getSelectedDay();
         tvListSesstion.setText(String.format("Lịch họp ngày %d tháng %d năm %d",day.getDay(), day.getMonth(), day.getYear()));
-        mPresenter.onViewPrepared();
+        mPresenter.onViewPrepared(day.getDay(), day.getMonth(), day.getYear());
+        updateAdapter();
     }
 
     private void initView(){

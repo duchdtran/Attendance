@@ -51,7 +51,7 @@ public class LoginInteractor extends BaseInteractor
 
     @Override
     public void updateRecord(Context context, String creDate) {
-        getApiHelper().updateRecord(context,creDate);
+        //getApiHelper().updateRecord(context,creDate);
     }
 
 

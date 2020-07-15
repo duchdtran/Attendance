@@ -34,8 +34,8 @@ public class CalendarPresenter<V extends CalendarMvpView,
 
 
     @Override
-    public void onViewPrepared() {
-        List<SessionDto> meetingList = getInteractor().getAllSession();
+    public void onViewPrepared(int day, int month, int year) {
+        List<SessionDto> meetingList = getInteractor().getSessionByDate(day, month, year);
         getMvpView().initRecycle(meetingList);
     }
 }

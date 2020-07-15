@@ -45,8 +45,8 @@ public class CalendarInteractor extends BaseInteractor
 
 
     @Override
-    public ArrayList<SessionDto> getAllSession() {
-        return sessionDAO.getSessionByDate(27,06,99);
+    public ArrayList<SessionDto> getSessionByDate(int day, int month, int year) {
+        return sessionDAO.getSessionByDate(day, month, year);
     }
 
     @Override

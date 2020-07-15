@@ -192,46 +192,46 @@ public class SessionDAO {
     }
     public ArrayList<SessionDto> getSessionByDate(int day, int month, int year) {
         ArrayList<SessionDto> arrayList = new ArrayList<>();
-//        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_SESSION + " where " + DBHelper.COLUMN_MEETING_ID + "=" + day, null);
-//        if (cursor != null) {
-//            while (cursor.moveToNext()) {
-//                int sessionId = cursor.getInt(0);
-//                int meetingId = cursor.getInt(1);
-//                String name = cursor.getString(2);
-//                int roomId = cursor.getInt(3);
-//                String timeStart = cursor.getString(4);
-//                String timeEnd = cursor.getString(5);
-//                String des = cursor.getString(6);
-//                int stt = cursor.getInt(7);
-//                int creUID = cursor.getInt(8);
-//                String creDate = cursor.getString(9);
-//                int modUID = cursor.getInt(10);
-//                String modDate = cursor.getString(11);
-//                SessionDto m = new SessionDto();
-//                MeetingDAO meetingDAO = SingletonDAO.getMeetingDAOInstance(mcontext);
-//                RoomDAO roomDAO = SingletonDAO.getRoomDAOInstance(mcontext);
-//                MeetingDto meetingDto = meetingDAO.getById(meetingId);
-//                RoomDto roomDto = roomDAO.getById(roomId);
-//                m.setMeetingDto(meetingDto);
-//                m.setMeetingDto(meetingDto);
-//                m.setName(name);
-//                m.setSessionId(sessionId);
-//                m.setRoomDto(roomDto);
-//                m.setTimeStart(timeStart);
-//                m.setTimeEnd(timeEnd);
-//                m.setDescription(des);
-//                m.setStatus(stt);
-//                m.setCreUID(creUID);
-//                m.setCreDate(creDate);
-//                m.setModUID(modUID);
-//                m.setModDate(modDate);
-//
-//                arrayList.add(m);
-//            }
-//            cursor.close();
-//            return arrayList;
-//        }
-        //else
+        String query = String.format("select * from %s where %s LIKE  '%04d-%02d-%02d%%'", DBHelper.TABLE_SESSION, DBHelper.COLUMN_TIME_START, year, month, day);
+        Cursor cursor = mDatabase.rawQuery(query, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                int sessionId = cursor.getInt(0);
+                int meetingId = cursor.getInt(1);
+                String name = cursor.getString(2);
+                int roomId = cursor.getInt(3);
+                String timeStart = cursor.getString(4);
+                String timeEnd = cursor.getString(5);
+                String des = cursor.getString(6);
+                int stt = cursor.getInt(7);
+                int creUID = cursor.getInt(8);
+                String creDate = cursor.getString(9);
+                int modUID = cursor.getInt(10);
+                String modDate = cursor.getString(11);
+                SessionDto m = new SessionDto();
+                MeetingDAO meetingDAO = SingletonDAO.getMeetingDAOInstance(mcontext);
+                RoomDAO roomDAO = SingletonDAO.getRoomDAOInstance(mcontext);
+                MeetingDto meetingDto = meetingDAO.getById(meetingId);
+                RoomDto roomDto = roomDAO.getById(roomId);
+                m.setMeetingDto(meetingDto);
+                m.setMeetingDto(meetingDto);
+                m.setName(name);
+                m.setSessionId(sessionId);
+                m.setRoomDto(roomDto);
+                m.setTimeStart(timeStart);
+                m.setTimeEnd(timeEnd);
+                m.setDescription(des);
+                m.setStatus(stt);
+                m.setCreUID(creUID);
+                m.setCreDate(creDate);
+                m.setModUID(modUID);
+                m.setModDate(modDate);
+
+                arrayList.add(m);
+            }
+            cursor.close();
+            return arrayList;
+        }
         return null;
     }
     public SessionDto getSessionByName(String name){

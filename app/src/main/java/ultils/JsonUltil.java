@@ -19,7 +19,7 @@ public class JsonUltil<T> {
         return Arrays.asList(jsonToObject);
     }
     public  static String getJson(Object o){
-        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm").create();
         String json = gson.toJson(o);
         return json;
     }
