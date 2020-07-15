@@ -16,12 +16,9 @@
 package ui.profile;
 
 
-import android.content.Context;
-
-import data.model.UserDto;
+import data.model.app.UserDto;
 import data.network.ApiHelper;
 import data.network.Callback;
-import data.prefs.AppPreferencesHelper;
 import data.prefs.PreferencesHelper;
 import ui.base.BaseInteractor;
 import ui.login.LoginMvpInteractor;

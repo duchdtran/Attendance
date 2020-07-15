@@ -18,7 +18,7 @@ package ui.splash;
 
 import android.content.Context;
 
-import data.model.UserDto;
+import data.model.app.UserDto;
 import data.network.ApiHelper;
 import data.network.Callback;
 import data.prefs.PreferencesHelper;

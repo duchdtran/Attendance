@@ -1,36 +1,40 @@
-package data.model;
+package data.model.server;
+
 
 import java.io.Serializable;
 
-public class SessionDto implements Serializable {
-    private Integer sessionId;
-    private MeetingDto meetingDto;
+public class MeetingServerDto implements Serializable {
+
+
+    private Integer meetingId;
+
+
     private String name;
-    private RoomDto roomDto;
+
+    private String address;
+
     private String timeStart;
+
     private String timeEnd;
+
     private String description;
+
     private Integer status;
+
     private Integer creUID;
+
     private String creDate;
     private Integer modUID;
+
     private String modDate;
 
-    public SessionDto() {
+    public MeetingServerDto() {
     }
 
-    public RoomDto getRoomDto() {
-        return roomDto;
-    }
-
-    public void setRoomDto(RoomDto roomDto) {
-        this.roomDto = roomDto;
-    }
-
-    public SessionDto(MeetingDto meetingDto, String name, RoomDto roomDto, String timeStart, String timeEnd, String description, Integer status, Integer creUID, String creDate, Integer modUID, String modDate) {
-        this.meetingDto = meetingDto;
+    public MeetingServerDto(Integer meetingId, String name, String address, String timeStart, String timeEnd, String description, Integer status, Integer creUID, String creDate, Integer modUID, String modDate) {
+        this.meetingId = meetingId;
         this.name = name;
-        this.roomDto = roomDto;
+        this.address = address;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.description = description;
@@ -40,12 +44,9 @@ public class SessionDto implements Serializable {
         this.modUID = modUID;
         this.modDate = modDate;
     }
-
-    public SessionDto(Integer sessionId, MeetingDto meetingDto, String name, RoomDto roomDto, String timeStart, String timeEnd, String description, int status, int creUID, String creDate, int modUID, String modDate) {
-        this.sessionId = sessionId;
-        this.meetingDto = meetingDto;
+    public MeetingServerDto(String name, String address, String timeStart, String timeEnd, String description, Integer status, Integer creUID, String creDate, Integer modUID, String modDate) {
         this.name = name;
-        this.roomDto = roomDto;
+        this.address = address;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.description = description;
@@ -55,30 +56,28 @@ public class SessionDto implements Serializable {
         this.modUID = modUID;
         this.modDate = modDate;
     }
-
-    public MeetingDto getMeetingDto() {
-        return meetingDto;
+    public Integer getMeetingId() {
+        return meetingId;
     }
 
-    public void setMeetingDto(MeetingDto meetingDto) {
-        this.meetingDto = meetingDto;
+    public void setMeetingId(Integer meetingId) {
+        this.meetingId = meetingId;
     }
-
-    public Integer getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(Integer sessionId) {
-        this.sessionId = sessionId;
-    }
-
 
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getTimeStart() {

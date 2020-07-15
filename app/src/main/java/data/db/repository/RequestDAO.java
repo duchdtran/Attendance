@@ -7,11 +7,13 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.util.ArrayList;
 
 import data.db.DBHelper;
-import data.model.Request;
+import data.model.app.Request;
 import ultils.SingletonDAO;
+
+import java.util.ArrayList;
+
 
 
 public class RequestDAO {
@@ -96,6 +98,6 @@ public class RequestDAO {
         mDatabase.delete(DBHelper.TABLE_REQUEST, DBHelper.COLUMN_REQUEST_ID + " = ?", new String[] { String.valueOf(id) });
     }
     public void deleteRequestByIdRecord(int id){
-       mDatabase.delete(DBHelper.TABLE_REQUEST, DBHelper.COLUMN_RECORD_ID + " = ?", new String[] { String.valueOf(id) });
+        mDatabase.delete(DBHelper.TABLE_REQUEST, DBHelper.COLUMN_RECORD_ID + " = ?", new String[] { String.valueOf(id) });
     }
 }

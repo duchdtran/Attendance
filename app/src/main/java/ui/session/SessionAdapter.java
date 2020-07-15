@@ -1,6 +1,7 @@
 package ui.session;
 
-import android.util.Log;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import ui.base.BaseViewHolder;
+import ui.session.detail.SessionDetailDialog;
 
 public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -27,6 +29,7 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_NORMAL = 1;
 
     private SessionAdapter.Callback mCallback;
+    Context context=null;
     private SessionAdapter.OnItemClickListener mListener;
     private List<SessionDto> sessionList;
     ArrayList<SessionDto> arr;
@@ -51,6 +54,7 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view;
         switch (viewType) {
             case VIEW_TYPE_NORMAL:

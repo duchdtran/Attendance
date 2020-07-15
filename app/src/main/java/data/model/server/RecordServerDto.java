@@ -1,27 +1,29 @@
-package data.model;
+package data.model.server;
 
 
-public class RecordDto {
+import java.io.Serializable;
+
+import data.model.app.SessionDto;
+
+public class RecordServerDto implements Serializable {
     private Integer recordId;
     private SessionDto sessionDto;
     private String name;
     private float length;
     private String path;
     private String status;
-    private String statusInApp;
     private String processingInfo;
     private Integer creUID;
     private String creDate;
     private Integer modUID;
     private String modDate;
 
-    public RecordDto(SessionDto sessionDto, String name, Float length, String path, String status, String statusInApp, String processingInfo, int creUID, String creDate, int modUID, String modDate) {
+    public RecordServerDto(SessionDto sessionDto, String name, Float length, String path, String status, String processingInfo, int creUID, String creDate, int modUID, String modDate) {
         this.sessionDto = sessionDto;
         this.name = name;
         this.length = length;
         this.path = path;
         this.status = status;
-        this.statusInApp = statusInApp;
         this.processingInfo = processingInfo;
         this.creUID = creUID;
         this.creDate = creDate;
@@ -49,14 +51,13 @@ public class RecordDto {
         return name;
     }
 
-    public RecordDto(int recordId, SessionDto sessionDto, String name, float length, String path, String status, String statusInApp, String processingInfo, int creUID, String creDate, int modUID, String modDate) {
+    public RecordServerDto(int recordId, SessionDto sessionDto, String name, float length, String path, String status, String processingInfo, int creUID, String creDate, int modUID, String modDate) {
         this.recordId = recordId;
         this.sessionDto = sessionDto;
         this.name = name;
         this.length = length;
         this.path = path;
         this.status = status;
-        this.statusInApp = statusInApp;
         this.processingInfo = processingInfo;
         this.creUID = creUID;
         this.creDate = creDate;
@@ -90,14 +91,6 @@ public class RecordDto {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getStatusInApp() {
-        return statusInApp;
-    }
-
-    public void setStatusInApp(String statusInApp) {
-        this.statusInApp = statusInApp;
     }
 
     public String getProcessingInfo() {
@@ -140,7 +133,7 @@ public class RecordDto {
         this.modDate = modDate;
     }
 
-    public RecordDto() {
+    public RecordServerDto() {
     }
 
 }

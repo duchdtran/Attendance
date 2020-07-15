@@ -1,10 +1,13 @@
-package data.model;
+package data.model.server;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
+import data.model.app.UserModuleDto;
 
-public class UserDto {
+
+public class UserServerDto implements Serializable {
 
     private Integer userId;
 
@@ -34,10 +37,10 @@ public class UserDto {
 
     private Timestamp modDate;
 
-    public UserDto() {
+    public UserServerDto() {
     }
 
-    public UserDto(Integer userId, String fullName, String email, String phone, String address) {
+    public UserServerDto(Integer userId, String fullName, String email, String phone, String address) {
         this.userId = userId;
         this.fullName = fullName;
         this.email = email;

@@ -5,14 +5,12 @@ package ui.splash;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.android.material.textfield.TextInputLayout;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import data.db.repository.RoomDAO;
-import data.model.RoomDto;
-import data.model.UserDto;
+import data.model.app.RoomDto;
+import data.model.app.UserDto;
 import data.network.Callback;
 import ui.base.BasePresenter;
 import ultils.SingletonDAO;

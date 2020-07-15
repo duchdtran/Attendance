@@ -1,17 +1,3 @@
-/*
- * Copyright (C) 2017 MINDORKS NEXTGEN PRIVATE LIMITED
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://mindorks.com/license/apache-v2
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License
- */
 
 package data.network;
 
@@ -19,23 +5,56 @@ package data.network;
 import android.content.Context;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Map;
 
-import data.model.MeetingDto;
-import data.model.RecordDto;
+import data.model.app.AttendeeDto;
+import data.model.app.MeetingDto;
+import data.model.app.RecordDto;
+import data.model.app.RoomDto;
+import data.model.app.SessionDto;
+import data.model.app.SpeakerDto;
 
-/**
- * Created by janisharali on 27/01/17.
- */
 
 public interface ApiHelper {
-
+      //login
       void Login(Callback callback, String username, String passwordLogin);
-      void  updateRecord(final Context context, final String creDate);
-      void  updateMeeting(final Context context, final String creDate);
-      void  updateSession(final Context context, final String creDate);
+
+      //update data
+      boolean updateRecord(final Context context, final String creDate);
+
+      boolean updateMeeting(final Context context, final String creDate);
+
+      boolean updateSession(final Context context, final String creDate);
+
+      boolean updateSpeaker(final Context context, final String creDate);
+
+      boolean updateAttendee(final Context context, final String creDate);
+
+      boolean updateRoom(final Context context, List<RoomDto> allRoom);
+      //upload audio
       int uploadFile(final Context context, RecordDto recordDto, Map<String, String> params);
+
+      //create and import data
+      void createData(JSONObject jsonObject, final Context context, final Callback volley, String url);
+
+      void importData(JSONArray jsonArray, final Context context, final Callback volley, String url);
+
       void creMeeting(MeetingDto meetingDto, final Context context, final Callback volley);
+
       void importMeetingService(JSONArray jsonArray, final Context context, final Callback volley);
+
+      void creSession(SessionDto sessionDto, final Context context, final Callback volley);
+
+      void importSessionService(JSONArray jsonArray, final Context context, final Callback volley);
+
+      void creSpeaker(SpeakerDto speakerDto, final Context context, final Callback volley);
+
+      void importSpeakerService(JSONArray jsonArray, final Context context, final Callback volley);
+
+      void creAttendee(AttendeeDto attendeeDto, final Context context, final Callback volley);
+
+      void importAttendeeService(JSONArray jsonArray, final Context context, final Callback volley);
 }

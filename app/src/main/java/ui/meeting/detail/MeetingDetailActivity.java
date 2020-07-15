@@ -5,15 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ubnd.attendance.R;
 
+import java.util.List;
+
+import data.model.app.MeetingDto;
+import data.model.app.SessionDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
@@ -25,6 +32,9 @@ public class MeetingDetailActivity extends BaseActivity implements MeetingDetail
     Toolbar toolbar;
     RecyclerView recyclerView;
     SessionAdapter adapter;
+    TextView tvName, tvAddress, tvTimeStart, tvTimeEnd;
+    MeetingDto meetingDto;
+
     public static final String TAG = "MeetingActivity";
     MeetingDetailMvpPresenter<MeetingDetailMvpView, MeetingDetailMvpInteractor> mPresenter;
     public static Intent getStartIntent(Context context) {
@@ -39,17 +49,34 @@ public class MeetingDetailActivity extends BaseActivity implements MeetingDetail
         MeetingDetailPresenter meetingDetailPresenter = new MeetingDetailPresenter<>(new MeetingDetailInteractor((new AppPreferencesHelper(getApplicationContext())),new AppApiHelper(getApplicationContext())));
         mPresenter = meetingDetailPresenter;
         mPresenter.onAttach(MeetingDetailActivity.this);
+
+        meetingDto = (MeetingDto) getIntent().getSerializableExtra("meeting");
+        initView();
         setUp();
+        mPresenter.onViewPrepared(meetingDto);
+    }
+
+    private void initView() {
+        tvName = findViewById(R.id.tv_name);
+        tvAddress = findViewById(R.id.tv_address);
+        tvTimeEnd = findViewById(R.id.tv_time_end);
+        tvTimeStart = findViewById(R.id.tv_time_start);
     }
 
 
     @Override
     protected void setUp() {
+        //toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //mPresenter.onViewPrepared();
+        //set detail meeting
+        tvName.setText(meetingDto.getName());
+        tvAddress.setText(meetingDto.getAddress());
+        tvTimeStart.setText(meetingDto.getTimeStart());
+        tvTimeEnd.setText(meetingDto.getTimeEnd());
+
     }
 
     @Override
@@ -88,5 +115,21 @@ public class MeetingDetailActivity extends BaseActivity implements MeetingDetail
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void initRecycle(List<SessionDto> sessionList) {
+        recyclerView = findViewById(R.id.recycle_view);
+        adapter = new SessionAdapter(sessionList);
+        if (adapter != null) {
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+        }
+    }
+
+    @Override
+    public void updateSession(List<SessionDto> sessionList) {
+        adapter.addItems(sessionList);
     }
 }

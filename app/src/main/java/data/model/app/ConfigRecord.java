@@ -1,8 +1,9 @@
-package data.model;
+package data.model.app;
 
 
+import java.io.Serializable;
 
-public class ConfigRecord {
+public class ConfigRecord implements Serializable {
     private Integer maxSize;
     private String format;
     private String channel;

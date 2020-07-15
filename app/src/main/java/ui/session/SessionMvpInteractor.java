@@ -8,7 +8,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import data.network.Callback;
 import ui.base.MvpInteractor;
 

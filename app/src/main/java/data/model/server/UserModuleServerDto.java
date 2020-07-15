@@ -1,9 +1,12 @@
-package data.model;
+package data.model.server;
 
 
+import java.io.Serializable;
 
+import data.model.app.ModuleDto;
+import data.model.app.UserDto;
 
-public class UserModuleDto {
+public class UserModuleServerDto implements Serializable {
    
     private int userModuleID;
     private ModuleDto moduleDto;

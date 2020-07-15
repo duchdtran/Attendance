@@ -8,7 +8,7 @@ import org.json.JSONArray;
 
 import java.util.List;
 
-import data.model.MeetingDto;
+import data.model.app.MeetingDto;
 import data.network.Callback;
 import ui.base.MvpInteractor;
 

@@ -16,10 +16,15 @@
 package ui.meeting.detail;
 
 
+import android.content.Context;
+
+import data.model.app.MeetingDto;
 import ui.base.MvpPresenter;
 
 public interface MeetingDetailMvpPresenter<V extends MeetingDetailMvpView,
         I extends MeetingDetailMvpInteractor> extends MvpPresenter<V, I> {
-
+    void onViewPrepared(MeetingDto meetingDto);
+    void showAddSession(Context context, MeetingDto meetingDto);
+    void importData(String path,int id,Context context,MeetingDto meetingDto);
 
 }

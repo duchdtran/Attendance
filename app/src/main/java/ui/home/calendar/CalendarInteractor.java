@@ -23,7 +23,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 import data.db.repository.SessionDAO;
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import data.network.ApiHelper;
 import data.network.Callback;
 import data.prefs.PreferencesHelper;
@@ -46,7 +46,7 @@ public class CalendarInteractor extends BaseInteractor
 
     @Override
     public ArrayList<SessionDto> getAllSession() {
-        return sessionDAO.getAllItems();
+        return sessionDAO.getSessionByDate(27,06,99);
     }
 
     @Override

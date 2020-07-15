@@ -3,7 +3,7 @@ package ui.session;
 
 import java.util.List;
 
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import ui.base.MvpView;
 
 public interface SessionMvpView extends MvpView {

@@ -41,6 +41,45 @@ public class DBHelper extends SQLiteOpenHelper {
     //comlumn of request table
     public static final String TABLE_REQUEST="request";
     public static final String COLUMN_REQUEST_ID="Request_Id";
+    //column of speaker table
+    public static final String TABLE_SPEAKER="speaker";
+    public static final String COLUMN_SPEAKER_FULL_NAME="Full_Name";
+    public static final String COLUMN_SPEAKER_ID="Speaker_id";
+    public static final String COLUMN_SPEAKER_OTHER_NAME="Other_Name";
+    public static final String COLUMN_SPEAKER_GENDER="Gender";
+    public static final String COLUMN_SPEAKER_EMAIL="Email";
+    public static final String COLUMN_SPEAKER_PHONE="Phone";
+    public static final String COLUMN_SPEAKER_BIRTHDAY="Birthday";
+    public static final String COLUMN_SPEAKER_REGENCY="Regency";
+
+    //column of Duty table
+    public static final String TABLE_DUTY="duty";
+    public static final String DUTY_ID="Duty_ID";
+    public static final String DUTY_NAME="Duty_Name";
+
+    //column of Attendee table
+    public static final String TABLE_ATTENDEE="attendee";
+    public static final String ATTENDEE_ID="Attendee_ID";
+
+
+    // create table speaker
+
+    public static final String SQLITE_CREATE_TABLE_SPEAKER= "CREATE TABLE " + TABLE_SPEAKER + " ("+COLUMN_SPEAKER_ID +" INTEGER PRIMARY KEY " +
+            "AUTOINCREMENT" + COMA_SEP +
+            COLUMN_SPEAKER_FULL_NAME + " TEXT" + COMA_SEP +
+            COLUMN_SPEAKER_OTHER_NAME + " TEXT" + COMA_SEP +
+            COLUMN_SPEAKER_GENDER + " INTEGER" + COMA_SEP +
+            COLUMN_SPEAKER_EMAIL + " TEXT"+ COMA_SEP+
+            COLUMN_SPEAKER_PHONE + " TEXT"+ COMA_SEP+
+            COLUMN_SPEAKER_BIRTHDAY + " TEXT"+ COMA_SEP+
+            COLUMN_SPEAKER_REGENCY + " TEXT"+ COMA_SEP+
+            COLUMN_STATUS + " INTEGER"+ COMA_SEP+
+            COLUMN_CRE_UID + " INTEGER"+ COMA_SEP+
+            COLUMN_CRE_DATE + " TEXT"+ COMA_SEP+
+            COLUMN_MOD_UID + " INTEGER"+ COMA_SEP+
+            COLUMN_MOD_DATE + " TEXT "+
+            ")";
+
     //create table meeting
     public static final String SQLITE_CREATE_TABLE_MEETING = "CREATE TABLE " + TABLE_MEETING + " (Meeting_id INTEGER PRIMARY KEY " +
             "AUTOINCREMENT" + COMA_SEP +
@@ -96,6 +135,25 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_RECORD_ID + " INTEGER" +
             ")";
 
+    //create table duty
+    public static final String SQLITE_CREATE_TABLE_DUTY = "CREATE TABLE " + TABLE_DUTY+ " ("+ DUTY_ID +" INTEGER PRIMARY KEY " +
+            "AUTOINCREMENT" + COMA_SEP +
+            DUTY_NAME + " TEXT" + COMA_SEP+
+            COLUMN_DESCRIPTION +" TEXT"+
+            ")";
+    // create table attendee
+    public static final String SQLITE_CREATE_TABLE_ATTENDEE = "CREATE TABLE " + TABLE_ATTENDEE+ " ("+ ATTENDEE_ID +" INTEGER PRIMARY KEY " +
+            "AUTOINCREMENT" + COMA_SEP +
+            COLUMN_SESSION_ID + " INTEGER" + COMA_SEP+
+            COLUMN_SPEAKER_ID +" INTEGER"+ COMA_SEP+
+            DUTY_ID + " INTEGER"+ COMA_SEP+
+            COLUMN_STATUS + " TEXT"+ COMA_SEP+
+            COLUMN_CRE_UID + " INTEGER"+ COMA_SEP+
+            COLUMN_CRE_DATE + " TEXT"+ COMA_SEP+
+            COLUMN_MOD_UID + " INTEGER"+ COMA_SEP+
+            COLUMN_MOD_DATE + " TEXT "+
+            ")";
+
     public DBHelper(Context context) {
         super(context, AppConstants.DB_NAME, null,VERSION);
     }
@@ -106,6 +164,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(SQLITE_CREATE_TABLE_SESSION);
         db.execSQL(SQLITE_CREATE_TABLE_ROOM);
         db.execSQL(SQLITE_CREATE_TABLE_REQUEST);
+        db.execSQL(SQLITE_CREATE_TABLE_SPEAKER);
+        db.execSQL(SQLITE_CREATE_TABLE_DUTY);
+        db.execSQL(SQLITE_CREATE_TABLE_ATTENDEE);
     }
 
     @Override
@@ -120,7 +181,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SESSION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ROOM);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REQUEST);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPEAKER);
         onCreate(db);
     }
 }
-

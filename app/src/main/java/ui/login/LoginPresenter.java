@@ -4,7 +4,6 @@ package ui.login;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -12,8 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import data.db.repository.RoomDAO;
-import data.model.RoomDto;
-import data.model.UserDto;
+import data.model.app.RoomDto;
+import data.model.app.UserDto;
 import data.network.Callback;
 import ui.base.BasePresenter;
 import ultils.SingletonDAO;
@@ -52,7 +51,7 @@ public class LoginPresenter<V extends LoginMvpView, I extends LoginMvpInteractor
                             String token = jsonObject.getString("token");
                             UserDto userDto = new UserDto(userId, fullName, email, phone, address);
                             getInteractor().getPreferencesHelper().setUser(userDto, token);
-                            updateData();
+                            //updateData();
                             getMvpView().openHomeActivity();
                         } else{
                             getMvpView().showMessage("Đăng nhập không thành công");

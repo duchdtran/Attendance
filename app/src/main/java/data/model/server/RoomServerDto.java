@@ -1,22 +1,24 @@
-package data.model;
+package data.model.server;
 
-public class RoomDto {
+import java.io.Serializable;
+
+public class RoomServerDto implements Serializable {
     private Integer roomId;
     private String roomName;
     private String roomDescription;
     private Integer status;
 
-    public RoomDto() {
+    public RoomServerDto() {
     }
 
-    public RoomDto(Integer roomId, String roomName, String roomDescription, Integer status) {
+    public RoomServerDto(Integer roomId, String roomName, String roomDescription, Integer status) {
         this.roomId = roomId;
         this.roomName = roomName;
         this.roomDescription = roomDescription;
         this.status = status;
     }
 
-    public RoomDto(String roomName, String roomDescription, Integer status) {
+    public RoomServerDto(String roomName, String roomDescription, Integer status) {
         this.roomName = roomName;
         this.roomDescription = roomDescription;
         this.status = status;
@@ -35,7 +37,8 @@ public class RoomDto {
     }
 
     public void setRoomName(String roomName) {
-        this.roomName = roomName;
+        this.roomName = roomName.trim();
+
     }
 
     public String getRoomDescription() {

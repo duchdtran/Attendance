@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import java.util.List;
 
 import data.db.repository.MeetingDAO;
-import data.model.MeetingDto;
+import data.model.app.MeetingDto;
 import data.network.ApiHelper;
 import data.network.Callback;
 import data.prefs.PreferencesHelper;

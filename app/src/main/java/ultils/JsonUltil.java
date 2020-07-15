@@ -5,34 +5,22 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 
-import data.model.MeetingDto;
-import data.model.RecordDto;
-import data.model.SessionDto;
+import data.model.app.MeetingDto;
+import data.model.app.RecordDto;
+import data.model.app.SessionDto;
 
-public class JsonUltil {
-    public static List<RecordDto> converTolistRecord(String json){
-        Gson gson=  new GsonBuilder().setDateFormat(AppConstants.TIMESTAMP_FORMAT).create();
-        Type collectionType = new TypeToken<List<RecordDto>>(){}.getType();
-        List<RecordDto> list = gson.fromJson(json, collectionType);
-        return  list;
-    }
-    public static  List<MeetingDto> converToListMeeting(String json) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-        Type collectionType = new TypeToken<List<MeetingDto>>() {
-        }.getType();
-        List<MeetingDto> list = gson.fromJson(json, collectionType);
-        return list;
-    }
-    public static  List<SessionDto> converToListSession(String json) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-        Type collectionType = new TypeToken<List<SessionDto>>() {
-        }.getType();
-        List<SessionDto> list = gson.fromJson(json, collectionType);
-        return list;
+public class JsonUltil<T> {
+    public static final <T> List<T> converToArr( final String json,final Class<T[]> clazz)
+    {
+        final T[] jsonToObject = new Gson().fromJson(json, clazz);
+        return Arrays.asList(jsonToObject);
     }
     public  static String getJson(Object o){
-        return new Gson().toJson(o);
+        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        String json = gson.toJson(o);
+        return json;
     }
 }

@@ -3,7 +3,7 @@ package ui.meeting;
 
 import java.util.List;
 
-import data.model.MeetingDto;
+import data.model.app.MeetingDto;
 import ui.base.MvpView;
 
 public interface MeetingMvpView extends MvpView {

@@ -17,7 +17,7 @@ package ui.home.calendar;
 
 import java.util.List;
 
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import ui.base.BasePresenter;
 
 /**

@@ -10,9 +10,11 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import data.db.DBHelper;
-import data.model.RecordDto;
-import data.model.SessionDto;
+import data.model.app.RecordDto;
+import data.model.app.SessionDto;
 import ultils.SingletonDAO;
+
+
 
 
 public class RecordDAO {
@@ -39,33 +41,32 @@ public class RecordDAO {
         mDBHelper.close();
     }
     public  boolean addRecording(RecordDto recordDto){
-        try{
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(DBHelper.COLUMN_NAME_RECORD, recordDto.getName());
-            contentValues.put(DBHelper.COLUMN_SESSION_ID, recordDto.getSessionDto().getSessionId());
-            contentValues.put(DBHelper.COLUMN_LENGT, recordDto.getLength());
-            contentValues.put(DBHelper.COLUMN_PATH, recordDto.getPath());
-            contentValues.put(DBHelper.COLUMN_STATUS, recordDto.getStatus());
-            contentValues.put(DBHelper.COLUMN_STATUS_APP, recordDto.getStatusInApp());
-            contentValues.put(DBHelper.COLUMN_PROCESSING_INFOR, recordDto.getProcessingInfo());
-            contentValues.put(DBHelper.COLUMN_CRE_UID, recordDto.getCreUID());
-            contentValues.put(DBHelper.COLUMN_CRE_DATE, recordDto.getCreDate());
-            contentValues.put(DBHelper.COLUMN_MOD_UID, recordDto.getModUID());
-            contentValues.put(DBHelper.COLUMN_MOD_DATE, recordDto.getModDate());
-            Log.d("content",contentValues.getAsString(DBHelper.COLUMN_SESSION_ID));
-            mDatabase.insert(DBHelper.TABLE_RECORD,null,contentValues);
-            Log.d("luu thanh con","true");
-            return  true;
-        }catch (Exception e){
-            Log.d("luu thanh con","false");
-            e.printStackTrace();
-            return  false;
+        if(!isExits(recordDto.getName())){
+            try{
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.COLUMN_NAME_RECORD, recordDto.getName());
+                contentValues.put(DBHelper.COLUMN_SESSION_ID, recordDto.getSessionDto().getSessionId());
+                contentValues.put(DBHelper.COLUMN_LENGT, recordDto.getLength());
+                contentValues.put(DBHelper.COLUMN_PATH, recordDto.getPath());
+                contentValues.put(DBHelper.COLUMN_STATUS, recordDto.getStatus());
+                contentValues.put(DBHelper.COLUMN_STATUS_APP, recordDto.getStatusInApp());
+                contentValues.put(DBHelper.COLUMN_PROCESSING_INFOR, recordDto.getProcessingInfo());
+                contentValues.put(DBHelper.COLUMN_CRE_UID, recordDto.getCreUID());
+                contentValues.put(DBHelper.COLUMN_CRE_DATE, recordDto.getCreDate());
+                contentValues.put(DBHelper.COLUMN_MOD_UID, recordDto.getModUID());
+                contentValues.put(DBHelper.COLUMN_MOD_DATE, recordDto.getModDate());
+                mDatabase.insert(DBHelper.TABLE_RECORD,null,contentValues);
+                return  true;
+            }catch (Exception e){
+                e.printStackTrace();
+                return  false;
+            }
         }
-
+        return false;
     }
     public ArrayList<RecordDto> getAllItems(){
         ArrayList<RecordDto> arrayList = new ArrayList<>();
-        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_RECORD + " ORDER BY "+ DBHelper.COLUMN_MOD_DATE+ " DESC",null);
+        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_RECORD + " ORDER BY "+DBHelper.COLUMN_MOD_DATE+ " DESC",null);
         if(cursor!=null){
             while (cursor.moveToNext()){
                 int recordId = cursor.getInt(0);
@@ -92,7 +93,7 @@ public class RecordDAO {
     }
     public RecordDto getItemById(int id){
         Cursor cursor =null;
-                cursor= mDatabase.rawQuery("select * from " + DBHelper.TABLE_RECORD +" where "+ DBHelper.COLUMN_RECORD_ID+"="+id,null);
+        cursor= mDatabase.rawQuery("select * from " + DBHelper.TABLE_RECORD +" where "+DBHelper.COLUMN_RECORD_ID+"="+id,null);
         if(cursor!=null&&cursor.moveToFirst()){
             int recordId = cursor.getInt(0);
             int sessionId = cursor.getInt(1);
@@ -111,7 +112,7 @@ public class RecordDAO {
             RecordDto recordDto = new RecordDto(recordId, sessionDto,name,lengt,path,stt,sttApp,process,creUID,creDate,modUID,modDate);
             cursor.close();
             return recordDto;
-            }
+        }
         else return null;
     }
     public RecordDto getItemByPath(String path){
@@ -143,10 +144,10 @@ public class RecordDAO {
         int count=0;
         if(cursor!=null){
             cursor.moveToLast();
-           count=cursor.getInt(0);
+            count=cursor.getInt(0);
         }
         cursor.close();
-       return  count;
+        return  count;
     }
     public void updateRecord(RecordDto recordDto) {
         ContentValues contentValues = new ContentValues();
@@ -162,15 +163,23 @@ public class RecordDAO {
         contentValues.put(DBHelper.COLUMN_MOD_UID, recordDto.getModUID());
         contentValues.put(DBHelper.COLUMN_MOD_DATE, recordDto.getModDate());
 
-       mDatabase.update(DBHelper.TABLE_RECORD, contentValues, DBHelper.COLUMN_RECORD_ID+ " = ?", new String[] { String.valueOf(recordDto.getRecordId()) });
+        mDatabase.update(DBHelper.TABLE_RECORD, contentValues, DBHelper.COLUMN_NAME_RECORD+ " = ?", new String[] { String.valueOf(recordDto.getName()) });
     }
     public int getIdByPath(String path){
-        Cursor cursor = mDatabase.rawQuery("select "+ DBHelper.COLUMN_RECORD_ID +" from " + DBHelper.TABLE_RECORD +" where "+ DBHelper.COLUMN_PATH+"='"+path+"'",null);
+        Cursor cursor = mDatabase.rawQuery("select "+DBHelper.COLUMN_RECORD_ID +" from " + DBHelper.TABLE_RECORD +" where "+DBHelper.COLUMN_PATH+"='"+path+"'",null);
         int count=0;
         if(cursor!=null&&cursor.moveToFirst()){
             count=cursor.getInt(0);
         }
         cursor.close();
         return  count;
+    }
+    public  boolean isExits(String recordDto){
+        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_RECORD+" where " +DBHelper.COLUMN_NAME_RECORD +"='"+recordDto+"'",null);
+        if(cursor!=null&& cursor.moveToFirst()){
+            cursor.close();
+            return true;
+        }
+        else return false;
     }
 }

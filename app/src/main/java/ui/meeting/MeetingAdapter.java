@@ -1,6 +1,8 @@
 
 package ui.meeting;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +21,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import data.model.MeetingDto;
+import data.model.app.MeetingDto;
 import ui.base.BaseViewHolder;
+import ui.meeting.detail.MeetingDetailActivity;
 
 
 public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -29,6 +32,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_NORMAL = 1;
 
     private Callback mCallback;
+    Context context=null;
     private OnItemClickListener mListener;
     private List<MeetingDto> meetingList;
     ArrayList<MeetingDto> arr;
@@ -52,6 +56,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.context=parent.getContext();
         View view;
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
@@ -105,17 +110,17 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             viewStatus = itemView.findViewById(R.id.view_status);
             btnMore = itemView.findViewById(R.id.btn_more);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null) {
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION) {
+//                            listener.onItemClick(position);
+//                        }
+//                    }
+//                }
+//            });
             btnMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,7 +138,7 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         public void onBind(final int position) {
             super.onBind(position);
-            MeetingDto meetingDto = meetingList.get(position);
+            final MeetingDto meetingDto = meetingList.get(position);
             if (meetingDto.getName() != null) {
                 String nameM=meetingDto.getName();
                 String tmp="";
@@ -171,6 +176,14 @@ public class MeetingAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (meetingDto.getTimeStart()!= null) {
                 tvTime.setText(meetingDto.getTimeStart());
             }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = MeetingDetailActivity.getStartIntent(context);
+                    intent.putExtra("meeting",meetingDto);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

@@ -5,9 +5,8 @@ package ui.profile;
 import android.widget.TextView;
 
 
-import data.model.UserDto;
+import data.model.app.UserDto;
 import data.network.Callback;
-import data.prefs.AppPreferencesHelper;
 import ui.base.BasePresenter;
 
 

@@ -3,8 +3,8 @@ package data.prefs;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import data.model.ConfigRecord;
-import data.model.UserDto;
+import data.model.app.ConfigRecord;
+import data.model.app.UserDto;
 import ultils.AppConstants;
 
 public class AppPreferencesHelper implements PreferencesHelper{
@@ -17,6 +17,8 @@ public class AppPreferencesHelper implements PreferencesHelper{
     private static final String PREF_KEY_CREDATE_RECORD="record";
     private static final String PREF_KEY_CREDATE_MEETING="meeting";
     private static final String PREF_KEY_CREDATE_SESSION="session";
+    private static final String PREF_KEY_CREDATE_SPEAKER="speaker";
+    private static final String PREF_KEY_CREDATE_ATTENDEE="attendee";
     private static final String PREF_KEY_CONFIG_ISCHECK="ischeck";
     private static final String PREF_KEY_CONFIG_MAXSIZE="maxSize";
     private static final String PREF_KEY_CONFIG_CHANEL="channel";
@@ -26,8 +28,8 @@ public class AppPreferencesHelper implements PreferencesHelper{
     private static final String PREF_KEY_CONFIG_BITNUMBER="bitNumber";
     private SharedPreferences prefs1,prefs2,prefs3;
     String pref1= AppConstants.PREF_NAME_USER,
-            pref2= AppConstants.PREF_NAME_CREDATE,
-            pref3= AppConstants.PREF_NAME_CONFIG;
+            pref2=AppConstants.PREF_NAME_CREDATE,
+            pref3=AppConstants.PREF_NAME_CONFIG;
 
     SharedPreferences.Editor editor1,editor2,editor3;
     Context context;
@@ -44,18 +46,18 @@ public class AppPreferencesHelper implements PreferencesHelper{
     @Override
     public void setUser(UserDto user, String token) {
 
-          editor1.putString(PREF_KEY_USER_FULLNAME,user.getFullName());
-          editor1.putString(PREF_KEY_USER_ADDRESS,user.getAddress());
-          editor1.putString(PREF_KEY_USER_EMAIL,user.getEmail());
-          editor1.putInt(PREF_KEY_USER_ID,user.getUserId());
-          editor1.putString(PREF_KEY_USER_PHONE,user.getPhone());
-          editor1.putString(PREF_KEY_USER_TOKEN,token);
-          editor1.apply();
+        editor1.putString(PREF_KEY_USER_FULLNAME,user.getFullName());
+        editor1.putString(PREF_KEY_USER_ADDRESS,user.getAddress());
+        editor1.putString(PREF_KEY_USER_EMAIL,user.getEmail());
+        editor1.putInt(PREF_KEY_USER_ID,user.getUserId());
+        editor1.putString(PREF_KEY_USER_PHONE,user.getPhone());
+        editor1.putString(PREF_KEY_USER_TOKEN,token);
+        editor1.apply();
     }
 
     @Override
     public void setToken(String token) {
-      editor1.putString(PREF_KEY_USER_TOKEN,token);
+        editor1.putString(PREF_KEY_USER_TOKEN,token);
     }
 
     @Override
@@ -77,8 +79,8 @@ public class AppPreferencesHelper implements PreferencesHelper{
 
     @Override
     public void setCreDateRecord(String date) {
-       editor2.putString(PREF_KEY_CREDATE_RECORD,date);
-       editor2.apply();
+        editor2.putString(PREF_KEY_CREDATE_RECORD,date);
+        editor2.apply();
     }
 
     @Override
@@ -90,6 +92,18 @@ public class AppPreferencesHelper implements PreferencesHelper{
     @Override
     public void setCreDateSession(String date) {
         editor2.putString(PREF_KEY_CREDATE_SESSION,date);
+        editor2.apply();
+    }
+
+    @Override
+    public void setCreDateSpeaker(String date) {
+        editor2.putString(PREF_KEY_CREDATE_SPEAKER,date);
+        editor2.apply();
+    }
+
+    @Override
+    public void setCreDateAttendee(String date) {
+        editor2.putString(PREF_KEY_CREDATE_ATTENDEE,date);
         editor2.apply();
     }
 
@@ -109,14 +123,24 @@ public class AppPreferencesHelper implements PreferencesHelper{
     }
 
     @Override
+    public String getCreDateSpeaker() {
+        return prefs2.getString(PREF_KEY_CREDATE_SPEAKER,"2017-1-1 00:00:00");
+    }
+
+    @Override
+    public String getCreDateAttendee() {
+        return prefs2.getString(PREF_KEY_CREDATE_ATTENDEE,"2017-1-1 00:00:00");
+    }
+
+    @Override
     public void setConfigRecord(ConfigRecord config) {
-       editor3.putInt(PREF_KEY_CONFIG_MAXSIZE,config.getMaxSize());
-       editor3.putString(PREF_KEY_CONFIG_CHANEL,config.getChannel());
-       editor3.putInt(PREF_KEY_CONFIG_FREQUENCE,config.getFrequence());
-       editor3.putString(PREF_KEY_CONFIG_FORMAT,config.getFormat());
-       editor3.putInt(PREF_KEY_CONFIG_MAXSIZE,config.getMaxSize());
-       editor3.putInt(PREF_KEY_CONFIG_MAXTIME,config.getMaxTime());
-       editor3.apply();
+        editor3.putInt(PREF_KEY_CONFIG_MAXSIZE,config.getMaxSize());
+        editor3.putString(PREF_KEY_CONFIG_CHANEL,config.getChannel());
+        editor3.putInt(PREF_KEY_CONFIG_FREQUENCE,config.getFrequence());
+        editor3.putString(PREF_KEY_CONFIG_FORMAT,config.getFormat());
+        editor3.putInt(PREF_KEY_CONFIG_BITNUMBER,config.getBitNumber());
+        editor3.putInt(PREF_KEY_CONFIG_MAXTIME,config.getMaxTime());
+        editor3.apply();
     }
 
     @Override
@@ -133,8 +157,8 @@ public class AppPreferencesHelper implements PreferencesHelper{
 
     @Override
     public void setCheckConfigRecord(boolean ischeck) {
-       editor3.putBoolean(PREF_KEY_CONFIG_ISCHECK,ischeck);
-       editor3.apply();
+        editor3.putBoolean(PREF_KEY_CONFIG_ISCHECK,ischeck);
+        editor3.apply();
     }
 
     @Override

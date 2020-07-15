@@ -18,7 +18,7 @@ import com.ubnd.attendance.R;
 
 import java.util.List;
 
-import data.model.MeetingDto;
+import data.model.app.MeetingDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;

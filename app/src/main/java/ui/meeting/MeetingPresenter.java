@@ -6,7 +6,7 @@ import android.content.Context;
 
 import java.util.List;
 
-import data.model.MeetingDto;
+import data.model.app.MeetingDto;
 import ui.base.BasePresenter;
 
 public class MeetingPresenter<V extends MeetingMvpView, I extends MeetingMvpInteractor>

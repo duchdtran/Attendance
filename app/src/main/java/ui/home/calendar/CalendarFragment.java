@@ -19,7 +19,7 @@ import com.ubnd.attendance.R;
 
 import java.util.List;
 
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseFragment;

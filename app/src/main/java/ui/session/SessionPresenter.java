@@ -6,8 +6,7 @@ import android.content.Context;
 
 import java.util.List;
 
-import data.model.MeetingDto;
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import ui.base.BasePresenter;
 
 public class SessionPresenter<V extends SessionMvpView, I extends SessionMvpInteractor>

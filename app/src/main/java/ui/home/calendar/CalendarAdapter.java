@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import data.model.SessionDto;
+import data.model.app.SessionDto;
 import ui.base.BaseViewHolder;
 import ultils.AppConstants;
 

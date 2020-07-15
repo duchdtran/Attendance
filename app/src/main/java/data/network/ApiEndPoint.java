@@ -23,21 +23,44 @@ import ultils.AppConstants;
  */
 
 public final class ApiEndPoint {
-
+    //login
     public static final String ENDPOINT_SERVER_LOGIN = AppConstants.BASE_URL
             + "/login-service";
-    public static final String ENDPOINT_SERVER_UPDATERECORD = AppConstants.BASE_URL
+
+    //update data
+    public static final String ENDPOINT_SERVER_UPDATE_RECORD = AppConstants.BASE_URL
             + "/update-record";
-    public static final String ENDPOINT_SERVER_UPDATEMEETING = AppConstants.BASE_URL
+    public static final String ENDPOINT_SERVER_UPDATE_MEETING = AppConstants.BASE_URL
             + "/update-meeting";
-    public static final String ENDPOINT_SERVER_UPDATESESSION = AppConstants.BASE_URL
+    public static final String ENDPOINT_SERVER_UPDATE_SESSION = AppConstants.BASE_URL
             + "/update-session";
+    public static final String ENDPOINT_SERVER_UPDATE_SPEAKER = AppConstants.BASE_URL
+            + "/update-speaker";
+    public static final String ENDPOINT_SERVER_UPDATE_ATTENDEE= AppConstants.BASE_URL
+            + "/update-attendee";
+    public static final String ENDPOINT_SERVER_UPDATE_ROOM= AppConstants.BASE_URL
+            + "/update-room";
+    //upload audio
     public static final String ENDPOINT_SERVER_UPLOAD = AppConstants.BASE_URL
             + "/upload";
-    public static final String ENDPOINT_SERVER_CREATEMEETING = AppConstants.BASE_URL
+
+    //create data
+    public static final String ENDPOINT_SERVER_CREATE_MEETING = AppConstants.BASE_URL
             + "/create-meeting";
     public static final String ENDPOINT_SERVER_IMPORT_MEETING = AppConstants.BASE_URL
             + "/import-meeting";
+    public static final String ENDPOINT_SERVER_CREATE_SESSION = AppConstants.BASE_URL
+            + "/create-session";
+    public static final String ENDPOINT_SERVER_IMPORT_SESSION = AppConstants.BASE_URL
+            + "/import-session";
+    public static final String ENDPOINT_SERVER_CREATE_SPEAKER = AppConstants.BASE_URL
+            + "/create-speaker";
+    public static final String ENDPOINT_SERVER_IMPORT_SPEAKER = AppConstants.BASE_URL
+            + "/import-speaker";
+    public static final String ENDPOINT_SERVER_CREATE_ATTENDEE= AppConstants.BASE_URL
+            + "/create-attendee";
+    public static final String ENDPOINT_SERVER_IMPORT_ATTENDEE = AppConstants.BASE_URL
+            + "/import-attendee";
     private ApiEndPoint() {
         // This class is not publicly instantiable
     }

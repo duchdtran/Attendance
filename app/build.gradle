@@ -48,6 +48,9 @@ dependencies {
     //Circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //Rounded image
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
     //Collapsible calendar view
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3'
 

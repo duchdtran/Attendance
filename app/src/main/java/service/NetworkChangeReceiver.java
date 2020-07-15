@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import data.model.RecordDto;
-import data.model.Request;
+import data.model.app.RecordDto;
+import data.model.app.Request;
 import data.network.AppApiHelper;
 import ultils.JsonUltil;
 import ultils.NetworkUtils;

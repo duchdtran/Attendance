@@ -7,10 +7,14 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.util.ArrayList;
 
 import data.db.DBHelper;
-import data.model.RoomDto;
+import data.model.app.RoomDto;
+
+
+import java.util.ArrayList;
+
+
 
 public class RoomDAO {
     private Context mcontext;
@@ -77,8 +81,7 @@ public class RoomDAO {
     public RoomDto getById(int id){
 
         Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_ROOM +" where "+ DBHelper.COLUMN_ROOM_ID+"="+id,null);
-        if(cursor!=null){
-            cursor.moveToFirst();
+        if(cursor!=null&&cursor.moveToFirst()){
             int roomId = cursor.getInt(0);
             String name = cursor.getString(1);
             String des = cursor.getString(2);
@@ -108,15 +111,38 @@ public class RoomDAO {
         }
         else return null;
     }
-    public int getIdByName(String name){
+    public RoomDto getRoomByName(String name){
         Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_ROOM+" where " +DBHelper.COLUMN_ROOM_NAME +"='"+name+"'",null);
 
-        if(cursor!=null){
-            cursor.moveToFirst();
-            int id = cursor.getInt(0);
+        if(cursor!=null&&cursor.moveToFirst()){
+            int roomId = cursor.getInt(0);
+            String nameRoom = cursor.getString(1);
+            String des = cursor.getString(2);
+            int stt =cursor.getInt(3);
+            RoomDto m = new RoomDto();
+            m.setRoomId(roomId);
+            m.setRoomName(nameRoom);
+            m.setRoomDescription(des);
+            m.setStatus(stt);
             cursor.close();
-            return id;
+            return m;
         }
-        else return -1;
+        else return null;
+    }
+    public void updateRoom(RoomDto roomDto) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBHelper.COLUMN_ROOM_NAME, roomDto.getRoomName());
+        contentValues.put(DBHelper.COLUMN_DESCRIPTION, roomDto.getRoomDescription());
+        contentValues.put(DBHelper.COLUMN_STATUS, roomDto.getStatus());
+
+        mDatabase.update(DBHelper.TABLE_ROOM, contentValues, DBHelper.COLUMN_ROOM_NAME+ " = ?", new String[] { String.valueOf(roomDto.getRoomName()) });
+    }
+    public boolean isExits(String nameRoom) {
+        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_ROOM + " where " + DBHelper.COLUMN_ROOM_NAME + "='" + nameRoom + "'", null);
+        if (cursor != null&&cursor.moveToFirst()) {
+            cursor.close();
+            return true;
+        }
+        else return false;
     }
 }
