@@ -16,6 +16,10 @@
 package ui.profile;
 
 
+import android.graphics.Bitmap;
+
+import java.util.List;
+
 import ui.base.MvpView;
 
 /**
@@ -24,4 +28,8 @@ import ui.base.MvpView;
 
 public interface ProfileMvpView extends MvpView {
     void openLoginActivity();
+
+    void updateImage(Bitmap bitmap);
+    void initRecycle(List<Bitmap> listImage);
+    void updateAdapter();
 }

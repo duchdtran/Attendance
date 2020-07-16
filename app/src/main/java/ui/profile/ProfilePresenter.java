@@ -2,9 +2,13 @@
 package ui.profile;
 
 
+import android.graphics.Bitmap;
 import android.widget.TextView;
 
 
+import java.util.List;
+
+import data.model.app.SessionDto;
 import data.model.app.UserDto;
 import data.network.Callback;
 import ui.base.BasePresenter;
@@ -32,5 +36,13 @@ public class ProfilePresenter<V extends ProfileMvpView, I extends ProfileMvpInte
         tvAddress.setText(user.getAddress());
         tvPhone.setText(user.getPhone());
     }
+
+    @Override
+    public void onViewPrepared() {
+        List<Bitmap> listImage = getInteractor().getAllImage();
+        getMvpView().initRecycle(listImage);
+    }
+
+
 }
 

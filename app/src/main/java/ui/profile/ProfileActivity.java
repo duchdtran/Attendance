@@ -1,5 +1,6 @@
 package ui.profile;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,25 +20,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ubnd.attendance.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
 import ui.login.LoginActivity;
+import ui.session.SessionAdapter;
 
 
 public class ProfileActivity extends BaseActivity implements ProfileMvpView {
 
+    private static final int REQUEST_PERMISSION_CODE = 21;
+    public final static int TAKE_PHOTO = 276;
+
     Button btnLogout, btnAddImage;
     TextView tvName, tvEmail, tvAddress, tvPhone;
+    GridView gridView;
+    ImageAdapter adapter;
 
-
-    public final static int TAKE_PHOTO = 276;
     private String currentPhotoPath;
 
     ProfileMvpPresenter<ProfileMvpView, ProfileMvpInteractor> mPresenter;
@@ -53,6 +62,7 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
         tvAddress = findViewById(R.id.tv_address);
         tvPhone = findViewById(R.id.tv_phone);
         btnAddImage = findViewById(R.id.btn_add_image);
+        gridView = findViewById(R.id.gv_photo_album);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +92,7 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
     @Override
     protected void setUp() {
         mPresenter.setDataProfile(tvName,tvEmail,tvPhone,tvAddress);
+        mPresenter.onViewPrepared();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,14 +105,16 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
                 onServerLogoutClick();
             }
         });
+
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String filename = "photo";
+                requestPermission();
                 File storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
                 try {
-                    File imageFile = File.createTempFile(filename, ".jpg", storageDirectory);
+                    File imageFile = File.createTempFile(filename, ".png", storageDirectory);
 
                     currentPhotoPath = imageFile.getAbsolutePath();
 
@@ -123,10 +136,17 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
         if(requestCode == TAKE_PHOTO && resultCode == RESULT_OK){
             Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
 
-            ((ImageView)findViewById(R.id.imageview)).setImageBitmap(bitmap);
+            updateImage(bitmap);
         }
     }
+    void requestPermission() {
+        if (!(hasPermission(Manifest.permission.CAMERA))) {
+            requestPermissionsSafely(new String[]{
+                    Manifest.permission.CAMERA
 
+            }, REQUEST_PERMISSION_CODE);
+        }
+    }
     void onServerLogoutClick(){
         mPresenter.onServerLogoutClick();
     }
@@ -136,5 +156,25 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
         Intent intent = LoginActivity.getStartIntent(ProfileActivity.this);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    public void updateImage(Bitmap bitmap) {
+        adapter.addItems(bitmap);
+    }
+
+    @Override
+    public void initRecycle(List<Bitmap> listImage) {
+        adapter = new ImageAdapter(this, listImage);
+        if (adapter != null) {
+            gridView.setAdapter(adapter);
+
+        }
+    }
+
+    @Override
+    public void updateAdapter() {
+        adapter.notifyDataSetChanged();
+        gridView.setAdapter(adapter);
     }
 }

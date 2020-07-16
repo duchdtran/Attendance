@@ -42,4 +42,5 @@ public interface ProfileMvpPresenter<V extends ProfileMvpView,
         I extends ProfileMvpInteractor> extends MvpPresenter<V, I> {
     public  void onServerLogoutClick();
     public  void setDataProfile(TextView tvName, TextView tvEmail, TextView tvPhone, TextView tvAddress) ;
+    void onViewPrepared();
 }

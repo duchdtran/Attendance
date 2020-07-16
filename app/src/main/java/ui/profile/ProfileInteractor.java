@@ -16,6 +16,12 @@
 package ui.profile;
 
 
+import android.graphics.Bitmap;
+
+import com.ubnd.attendance.R;
+
+import java.util.ArrayList;
+
 import data.model.app.UserDto;
 import data.network.ApiHelper;
 import data.network.Callback;
@@ -45,6 +51,12 @@ public class ProfileInteractor extends BaseInteractor
     public UserDto getDataProfile() {
         UserDto user = getPreferencesHelper().getUser();
         return user;
+    }
+
+    @Override
+    public ArrayList<Bitmap> getAllImage() {
+        ArrayList<Bitmap> listImage = new ArrayList<>();
+        return listImage;
     }
 
 }

@@ -1,5 +1,6 @@
 package ui.session.detail;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -89,4 +90,5 @@ public class SessionDetailDialog extends DialogFragment {
             }
         });
     }
+
 }
