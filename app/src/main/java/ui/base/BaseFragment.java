@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment;
 import ultils.CommonUtils;
 
 
+
+
+
 public abstract class BaseFragment extends Fragment implements MvpView {
 
     private BaseActivity mActivity;

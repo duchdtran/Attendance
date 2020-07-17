@@ -10,7 +10,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import data.db.repository.DutyDAO;
 import data.db.repository.RoomDAO;
+import data.model.app.DutyDto;
 import data.model.app.RoomDto;
 import data.model.app.UserDto;
 import data.network.Callback;
@@ -44,18 +48,18 @@ public class LoginPresenter<V extends LoginMvpView, I extends LoginMvpInteractor
                         if ("success".equals(result)) {
                             JSONObject user = jsonObject.getJSONObject("user");
                             int userId = user.getInt("userId");
+                            String roles = "Admin";
                             String fullName = user.getString("fullName");
                             String email = user.getString("email");
                             String phone = user.getString("phone");
                             String address = user.getString("address");
                             String token = jsonObject.getString("token");
                             UserDto userDto = new UserDto(userId, fullName, email, phone, address);
-                            getInteractor().getPreferencesHelper().setUser(userDto, token);
+                            getInteractor().getPreferencesHelper().setUser(userDto, token, roles);
                             updateData();
                             getMvpView().openHomeActivity();
                         } else{
                             getMvpView().showMessage("Đăng nhập không thành công");
-                            Log.d("Volley Error",result);
                             getMvpView().hideLoading();
                         }
 
@@ -69,7 +73,6 @@ public class LoginPresenter<V extends LoginMvpView, I extends LoginMvpInteractor
             @Override
             public void getError(Object error, int stt) {
                 getMvpView().hideLoading();
-                Log.d("Volley Error:",error.toString());
                 getMvpView().showMessage("Đăng nhập không thành công");
             }
         };
@@ -87,21 +90,20 @@ public class LoginPresenter<V extends LoginMvpView, I extends LoginMvpInteractor
     @Override
     public void updateData() {
         Context context =(Context)getMvpView();
-
-        RoomDto r1 = new RoomDto("Phòng 301","Phòng tầng 3",0);
-        RoomDto r2 = new RoomDto("Phòng 402","Phòng tầng 4",0);
-        RoomDto r3 = new RoomDto("Phòng 503","Phòng tầng 5",0);
-        RoomDAO roomDAO = SingletonDAO.getRoomDAOInstance((Context)getMvpView());
-        roomDAO.addRoom(r1);
-        roomDAO.addRoom(r2);
-        roomDAO.addRoom(r3);
-        String creDateRecord,creDateMeeting,creDateSession;
-        creDateMeeting = getInteractor().getPreferencesHelper().getCreDateMeeting();
-        creDateSession = getInteractor().getPreferencesHelper().getCreDateSession();
-        creDateRecord  = getInteractor().getPreferencesHelper().getCreDateRecord();
-        getInteractor().updateMeeting(context,creDateMeeting);
-        getInteractor().updateSession(context,creDateSession);
-        getInteractor().updateRecord(context,creDateRecord);
+        List<DutyDto> list = SingletonDAO.getDutyDAOInstace(context).getAll();
+        if(list.size()!=3){
+            DutyDto d1 = new DutyDto("chuToa"	,"Chủ Tọa");
+            DutyDto d2 = new DutyDto("thuKy"	,"Thư Ký");
+            DutyDto d3 = new DutyDto("thanhVien"	,"Thành Viên");
+            DutyDAO dutyDAO = SingletonDAO.getDutyDAOInstace(context);
+            dutyDAO.addDuty(d1);
+            dutyDAO.addDuty(d2);
+            dutyDAO.addDuty(d3);
+            getInteractor().updateData(context);
+        }
+        else{
+            getInteractor().updateData(context);
+        }
     }
 
 

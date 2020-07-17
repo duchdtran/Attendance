@@ -16,8 +16,13 @@
 package ui.base;
 
 
+import android.content.Context;
+import android.os.CountDownTimer;
+
+import data.db.repository.RoomDAO;
 import data.network.ApiHelper;
 import data.prefs.PreferencesHelper;
+import ultils.SingletonDAO;
 
 
 /**
@@ -28,7 +33,6 @@ public class BaseInteractor implements MvpInteractor {
 
     private final PreferencesHelper mPreferencesHelper;
     private final ApiHelper mApiHelper;
-
     public BaseInteractor(PreferencesHelper preferencesHelper,
                           ApiHelper apiHelper) {
         mPreferencesHelper = preferencesHelper;
@@ -53,8 +57,47 @@ public class BaseInteractor implements MvpInteractor {
 
     @Override
     public void setUserAsLoggedOut() {
-       getPreferencesHelper().setUser(null,null);
+        getPreferencesHelper().setUser(null,null, null);
     }
 
+    @Override
+    public void updateData(final Context context){
+        getApiHelper().updateRoom(context, SingletonDAO.getRoomDAOInstance(context).getAllItems());
+        getApiHelper().updateSpeaker(context,getPreferencesHelper().getCreDateSpeaker());
+        getApiHelper().updateMeeting(context,getPreferencesHelper().getCreDateMeeting());
+        new CountDownTimer(1000,100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                getApiHelper().updateSession(context,getPreferencesHelper().getCreDateSession());
+            }
+        }.start();
+        new CountDownTimer(2000,100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                getApiHelper().updateRecord(context,getPreferencesHelper().getCreDateRecord());
+            }
+        }.start();
+        new CountDownTimer(3000,100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                getApiHelper().updateAttendee(context,getPreferencesHelper().getCreDateAttendee());
+            }
+        }.start();
+    }
 
 }

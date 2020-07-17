@@ -16,8 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
-
 import ui.login.LoginActivity;
 import ultils.CommonUtils;
 import ultils.NetworkUtils;
@@ -30,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
 

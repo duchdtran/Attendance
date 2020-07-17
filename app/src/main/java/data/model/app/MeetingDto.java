@@ -14,7 +14,7 @@ public class MeetingDto extends MeetingServerDto implements Serializable {
     }
 
     public MeetingDto(Integer meetingId, String name, String address, String timeStart, String timeEnd, String description, Integer status, Integer creUID, String creDate, Integer modUID, String modDate) {
-       super(meetingId,name,address,timeStart,timeEnd,description,status,creUID,creDate,modUID,modDate);
+        super(meetingId,name,address,timeStart,timeEnd,description,status,creUID,creDate,modUID,modDate);
     }
     public MeetingDto( String name, String address, String timeStart, String timeEnd, String description, Integer status, Integer creUID, String creDate, Integer modUID, String modDate) {
         super(name,address,timeStart,timeEnd,description,status,creUID,creDate,modUID,modDate);

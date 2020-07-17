@@ -11,7 +11,7 @@ public class RoomDto extends RoomServerDto implements Serializable {
     }
 
     public RoomDto(Integer roomId, String roomName, String roomDescription, Integer status) {
-       super(roomId,roomName,roomDescription,status);
+        super(roomId,roomName,roomDescription,status);
     }
 
     public RoomDto(String roomName, String roomDescription, Integer status) {

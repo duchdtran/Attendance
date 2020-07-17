@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Request implements Serializable {
     private  Integer idRequest;
-   private RecordDto record;
+    private RecordDto record;
 
     public Request(RecordDto record) {
         this.record = record;

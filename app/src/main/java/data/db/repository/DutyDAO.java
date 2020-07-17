@@ -54,16 +54,16 @@ public class DutyDAO {
         Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_DUTY , null);
         List<DutyDto> dutyDtos = new ArrayList<>();
         if (cursor != null ) {
-             while (cursor.moveToNext()){
-                 int dutyID = cursor.getInt(0);
-                 String name = cursor.getString(1);
-                 String description = cursor.getString(2);
-                 DutyDto dutyDto = new DutyDto();
-                 dutyDto.setDutyId(dutyID);
-                 dutyDto.setDutyName(name);
-                 dutyDto.setDutyDescription(description);
-                 dutyDtos.add(dutyDto);
-             }
+            while (cursor.moveToNext()){
+                int dutyID = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String description = cursor.getString(2);
+                DutyDto dutyDto = new DutyDto();
+                dutyDto.setDutyId(dutyID);
+                dutyDto.setDutyName(name);
+                dutyDto.setDutyDescription(description);
+                dutyDtos.add(dutyDto);
+            }
             cursor.close();
             return dutyDtos;
         } else return dutyDtos;
@@ -75,10 +75,10 @@ public class DutyDAO {
             int dutyID = cursor.getInt(0);
             String name = cursor.getString(1);
             String description = cursor.getString(2);
-           DutyDto dutyDto = new DutyDto();
-           dutyDto.setDutyId(dutyID);
-           dutyDto.setDutyName(name);
-           dutyDto.setDutyDescription(description);
+            DutyDto dutyDto = new DutyDto();
+            dutyDto.setDutyId(dutyID);
+            dutyDto.setDutyName(name);
+            dutyDto.setDutyDescription(description);
             cursor.close();
             return dutyDto;
         } else return null;

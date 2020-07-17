@@ -28,7 +28,7 @@ public class HomePageFragment extends BaseFragment implements
     public static final String TAG = "HomePageFragment";
 
     CircleImageView imvAvatar;
-    TextView tvName, tvPosition;
+    TextView tvName, tvRoles;
     CardView cvMeeting, cvSession, cvAttendance, cvStatistic;
 
     HomePageMvpPresenter<HomePageMvpView, HomePageMvpInteractor> mPresenter;
@@ -58,12 +58,14 @@ public class HomePageFragment extends BaseFragment implements
         cvSession.setOnClickListener(this);
         cvAttendance.setOnClickListener(this);
         cvStatistic.setOnClickListener(this);
+
+        mPresenter.setData(tvName, tvRoles, imvAvatar);
     }
 
     private void initView(){
         imvAvatar = view.findViewById(R.id.imv_avatar);
         tvName = view.findViewById(R.id.tv_name);
-        tvPosition = view.findViewById(R.id.tv_position);
+        tvRoles = view.findViewById(R.id.tv_roles);
         cvMeeting = view.findViewById(R.id.cv_meeting);
         cvSession = view.findViewById(R.id.cv_session);
         cvAttendance = view.findViewById(R.id.cv_attendance);

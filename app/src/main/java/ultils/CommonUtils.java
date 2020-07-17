@@ -1,3 +1,4 @@
+
 package ultils;
 
 import android.annotation.SuppressLint;
@@ -5,11 +6,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.provider.Settings;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import data.prefs.AppPreferencesHelper;
 import data.prefs.PreferencesHelper;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public final class CommonUtils {
 
@@ -47,4 +50,3 @@ public final class CommonUtils {
     }
 
 }
-

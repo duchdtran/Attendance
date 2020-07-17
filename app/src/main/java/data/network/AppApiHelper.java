@@ -124,7 +124,7 @@ public class AppApiHelper implements ApiHelper {
 
             requestQueue.add(jsonArrayRequest);
             return true;
-        } catch (JSONException e   ) {
+        } catch (JSONException e) {
             e.printStackTrace();
             return false;
         }
@@ -176,7 +176,7 @@ public class AppApiHelper implements ApiHelper {
         Callback volley = new Callback() {
             @Override
             public void getRespone(Object response, int stt) {
-                Log.d("AAA",response.toString());
+                Log.d("AAAM",response.toString());
                 List<MeetingDto> dtoList = JsonUltil.converToArr(response.toString(), MeetingDto[].class);
                 Log.d("sizemeeting",dtoList.size()+"");
                 if (dtoList != null) {

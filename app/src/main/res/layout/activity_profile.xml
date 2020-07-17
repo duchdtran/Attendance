@@ -49,7 +49,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Họ và tên"
-                    android:textSize="20sp"
                     android:layout_marginLeft="8dp"
                     />
                 <TextView
@@ -59,7 +58,6 @@
                     android:singleLine="true"
                     android:text="null"
                     android:gravity="right"
-                    android:textSize="20sp"
                     android:layout_marginRight="20dp"
                     />
             </LinearLayout>
@@ -84,7 +82,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
-                    android:textSize="20dp"
                     android:layout_marginLeft="8dp"
                     />
                 <TextView
@@ -93,7 +90,6 @@
                     android:layout_height="wrap_content"
                     android:text="null"
                     android:gravity="right"
-                    android:textSize="20sp"
                     android:singleLine="true"
                     android:layout_marginRight="20dp"
                     />
@@ -119,7 +115,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Số điện thoại"
-                    android:textSize="20dp"
                     android:layout_marginLeft="8dp"
                     />
                 <TextView
@@ -128,7 +123,6 @@
                     android:layout_height="wrap_content"
                     android:text="null"
                     android:gravity="right"
-                    android:textSize="20sp"
                     android:layout_marginRight="20dp"
                     />
             </LinearLayout>
@@ -153,7 +147,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Địa chỉ"
-                    android:textSize="20dp"
                     android:layout_marginLeft="8dp"
                     />
                 <TextView
@@ -163,7 +156,6 @@
                     android:text="null"
                     android:gravity="right"
                     android:singleLine="true"
-                    android:textSize="20sp"
                     android:layout_marginRight="20dp"
                     />
             </LinearLayout>

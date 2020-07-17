@@ -24,11 +24,11 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         if( NetworkUtils.isNetworkConnected(context)){
-             appApiHelper=new AppApiHelper(context);
-            CountDownTimer countDownTimer = new CountDownTimer(5000,1000) {
+            appApiHelper=new AppApiHelper(context);
+            CountDownTimer countDownTimer = new CountDownTimer(3000,1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                  Log.d("cho","cho");
+                    Log.d("cho","cho");
                 }
 
                 @Override
@@ -36,11 +36,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                     ArrayList<Request> list=new ArrayList<>();
                     ArrayList<Request> tmp= SingletonDAO.getRequestDAOInstace(context).getAllItems();
                     if(tmp!=null) list=tmp;
-                    Log.d("size:",list.size()+"");
                     if(list.size()>0){
                         for(int i=0;i<list.size();i++){
-                            Log.d("size",list.size()+list.get(i).getRecord().getName());
-
                             final RecordDto finalRecordDto = list.get(i).getRecord();
                             final int finalI = i;
                             final ArrayList<Request> finalList = list;
@@ -50,7 +47,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                                     String recordP = JsonUltil.getJson(finalRecordDto);
                                     params.put("record",recordP);
                                     response=appApiHelper.uploadFile(context, finalRecordDto,params);
-                                    Log.d("response",response+"");
                                     if(response==200) {
                                         finalRecordDto.setStatusInApp("Đã upload");
                                         SingletonDAO.getRequestDAOInstace(context).deleteRequest(finalList.get(finalI).getIdRequest());

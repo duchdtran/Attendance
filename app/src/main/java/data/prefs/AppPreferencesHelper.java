@@ -14,6 +14,7 @@ public class AppPreferencesHelper implements PreferencesHelper{
     private static final String PREF_KEY_USER_PHONE="phone";
     private static final String PREF_KEY_USER_ID="id";
     private static final String PREF_KEY_USER_TOKEN="token";
+    private static final String PREF_KEY_USER_ROLES="roles";
     private static final String PREF_KEY_CREDATE_RECORD="record";
     private static final String PREF_KEY_CREDATE_MEETING="meeting";
     private static final String PREF_KEY_CREDATE_SESSION="session";
@@ -44,7 +45,7 @@ public class AppPreferencesHelper implements PreferencesHelper{
     }
 
     @Override
-    public void setUser(UserDto user, String token) {
+    public void setUser(UserDto user, String token, String roles) {
 
         editor1.putString(PREF_KEY_USER_FULLNAME,user.getFullName());
         editor1.putString(PREF_KEY_USER_ADDRESS,user.getAddress());
@@ -52,9 +53,14 @@ public class AppPreferencesHelper implements PreferencesHelper{
         editor1.putInt(PREF_KEY_USER_ID,user.getUserId());
         editor1.putString(PREF_KEY_USER_PHONE,user.getPhone());
         editor1.putString(PREF_KEY_USER_TOKEN,token);
+        editor1.putString(PREF_KEY_USER_ROLES, roles);
         editor1.apply();
     }
 
+    @Override
+    public void setRoles(String roles) {
+        editor1.putString(PREF_KEY_USER_ROLES,roles);
+    }
     @Override
     public void setToken(String token) {
         editor1.putString(PREF_KEY_USER_TOKEN,token);
@@ -65,7 +71,10 @@ public class AppPreferencesHelper implements PreferencesHelper{
         UserDto user = new UserDto(prefs1.getInt(PREF_KEY_USER_ID,-1),prefs1.getString(PREF_KEY_USER_FULLNAME,null),prefs1.getString(PREF_KEY_USER_EMAIL,null),prefs1.getString(PREF_KEY_USER_PHONE,null),prefs1.getString(PREF_KEY_USER_ADDRESS,null));
         return user;
     }
-
+    @Override
+    public String getRoles(){
+        return prefs1.getString(PREF_KEY_USER_ROLES,null);
+    }
     @Override
     public String getToken(){
         return prefs1.getString(PREF_KEY_USER_TOKEN,null);

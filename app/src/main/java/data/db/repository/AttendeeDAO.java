@@ -15,7 +15,6 @@ import data.model.app.AttendeeDto;
 import data.model.app.SessionDto;
 import ultils.SingletonDAO;
 
-
 public class AttendeeDAO {
     private Context mcontext;
 
@@ -96,26 +95,26 @@ public class AttendeeDAO {
         Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_ATTENDEE+" where "+DBHelper.COLUMN_SESSION_ID+" ="+attendeeDto.getSessionDto().getSessionId()+" and "+ DBHelper.COLUMN_SPEAKER_ID+" ="+attendeeDto.getSpeakerDto().getSpeakerId(), null);
         AttendeeDto attendeeDto1 = new AttendeeDto();
         if (cursor != null&&cursor.moveToFirst()) {
-                int attendeeId = cursor.getInt(0);
-                int sessionId = cursor.getInt(1);
-                int speakerId = cursor.getInt(2);
-                int dutyId = cursor.getInt(3);
-                int status = cursor.getInt(4);
-                int creUID = cursor.getInt(5);
-                String creDate = cursor.getString(6);
-                int modUID = cursor.getInt(7);
-                String modDate = cursor.getString(8);
+            int attendeeId = cursor.getInt(0);
+            int sessionId = cursor.getInt(1);
+            int speakerId = cursor.getInt(2);
+            int dutyId = cursor.getInt(3);
+            int status = cursor.getInt(4);
+            int creUID = cursor.getInt(5);
+            String creDate = cursor.getString(6);
+            int modUID = cursor.getInt(7);
+            String modDate = cursor.getString(8);
 
-                attendeeDto1.setAttendeesId(attendeeId);
-                attendeeDto1.setSessionDto(SingletonDAO.getSessionDAOInstace(mcontext).getItemById(sessionId));
-                attendeeDto1.setSpeakerDto(SingletonDAO.getSpeakerDAOInstace(mcontext).getItemById(speakerId));
-                attendeeDto1.setDutyDto(SingletonDAO.getDutyDAOInstace(mcontext).getItemById(dutyId));
-                attendeeDto1.setStatus(status);
-                attendeeDto1.setCreUID(creUID);
-                attendeeDto1.setCreDate(creDate);
-                attendeeDto1.setModUID(modUID);
-                attendeeDto1.setModDate(modDate);
-               cursor.close();
+            attendeeDto1.setAttendeesId(attendeeId);
+            attendeeDto1.setSessionDto(SingletonDAO.getSessionDAOInstace(mcontext).getItemById(sessionId));
+            attendeeDto1.setSpeakerDto(SingletonDAO.getSpeakerDAOInstace(mcontext).getItemById(speakerId));
+            attendeeDto1.setDutyDto(SingletonDAO.getDutyDAOInstace(mcontext).getItemById(dutyId));
+            attendeeDto1.setStatus(status);
+            attendeeDto1.setCreUID(creUID);
+            attendeeDto1.setCreDate(creDate);
+            attendeeDto1.setModUID(modUID);
+            attendeeDto1.setModDate(modDate);
+            cursor.close();
             return attendeeDto1;
         }
         return attendeeDto1;

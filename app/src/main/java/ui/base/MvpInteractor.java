@@ -16,6 +16,8 @@
 package ui.base;
 
 
+import android.content.Context;
+
 import data.network.ApiHelper;
 import data.prefs.PreferencesHelper;
 
@@ -32,5 +34,5 @@ public interface MvpInteractor {
     void setUserAsLoggedOut();
 
     void setAccessToken(String accessToken);
-
+    void updateData(Context context);
 }

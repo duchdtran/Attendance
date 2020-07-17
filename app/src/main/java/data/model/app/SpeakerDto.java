@@ -8,7 +8,7 @@ public class SpeakerDto extends SpeakerServerDto implements Serializable {
 
 
     public SpeakerDto(String fullName, String otherName, Integer gender, String email, String phone, String birthday, String regency, Integer status, Integer creUID, String creDate, Integer modUID, String modDate) {
-      super(fullName,otherName,gender,email,phone,birthday,regency,status,creUID,creDate,modUID,modDate);
+        super(fullName,otherName,gender,email,phone,birthday,regency,status,creUID,creDate,modUID,modDate);
     }
 
     public SpeakerDto(Integer speakerId, String fullName, String otherName, Integer gender, String email, String phone, String birthday, String regency, Integer status, Integer creUID, String creDate, Integer modUID, String modDate) {

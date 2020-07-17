@@ -20,8 +20,5 @@ public class FilterDialog extends BottomSheetDialogFragment {
         View v = inflater.inflate(R.layout.dialog_filter, container, false);
         return v;
     }
-    public interface BottomSheetListener{
-        void onButtonClick();
-    }
 
 }

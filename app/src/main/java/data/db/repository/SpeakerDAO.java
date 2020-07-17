@@ -70,19 +70,19 @@ public class SpeakerDAO {
         Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_SPEAKER + " where " + DBHelper.COLUMN_STATUS + " !=-1", null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                 Integer speakerId=cursor.getInt(0);
-                 String fullName=cursor.getString(1);
-                 String otherName=cursor.getString(2);
-                 Integer gender=cursor.getInt(3);
-                 String email=cursor.getString(4);
-                 String phone=cursor.getString(5);
-                 String birthday=cursor.getString(6);
-                 String regency=cursor.getString(7);
-                 Integer status=cursor.getInt(8);
-                 Integer creUID=cursor.getInt(9);
-                 String creDate=cursor.getString(10);
-                 Integer modUID=cursor.getInt(11);
-                 String modDate=cursor.getString(12);
+                Integer speakerId=cursor.getInt(0);
+                String fullName=cursor.getString(1);
+                String otherName=cursor.getString(2);
+                Integer gender=cursor.getInt(3);
+                String email=cursor.getString(4);
+                String phone=cursor.getString(5);
+                String birthday=cursor.getString(6);
+                String regency=cursor.getString(7);
+                Integer status=cursor.getInt(8);
+                Integer creUID=cursor.getInt(9);
+                String creDate=cursor.getString(10);
+                Integer modUID=cursor.getInt(11);
+                String modDate=cursor.getString(12);
                 SpeakerDto speakerDto = new SpeakerDto(speakerId,fullName,otherName,gender,email,phone,birthday,regency,status,creUID,creDate,modUID,modDate);
                 arrayList.add(speakerDto);
             }

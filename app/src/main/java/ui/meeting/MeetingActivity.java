@@ -90,9 +90,6 @@ public class MeetingActivity extends BaseActivity implements MeetingMvpView {
                 FilterDialog filterDialog = new FilterDialog();
                 filterDialog.show(getSupportFragmentManager(), "filter");
                 break;
-            case R.id.option_search:
-
-                break;
         }
         return true;
     }

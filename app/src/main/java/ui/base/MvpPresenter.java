@@ -22,17 +22,19 @@ package ui.base;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 /**
  * Every presenter in the app must either implement this interface or extend BasePresenter
  * indicating the MvpView type that wants to be attached with.
  */
-public interface MvpPresenter<A extends MvpView, I extends MvpInteractor> {
+public interface MvpPresenter<V extends MvpView, I extends MvpInteractor> {
 
-    void onAttach(A mvpView);
+    void onAttach(V mvpView);
 
     void onDetach();
 
-    A getMvpView();
+    V getMvpView();
 
     I getInteractor();
 
@@ -43,4 +45,6 @@ public interface MvpPresenter<A extends MvpView, I extends MvpInteractor> {
     void setUserAsLoggedOut();
 
     void setLogout(Context context);
+
+    String setErrorMessage(ArrayList<Integer> errorNull,ArrayList<Integer> errorExists, ArrayList<Integer> errorTime,int cout);
 }

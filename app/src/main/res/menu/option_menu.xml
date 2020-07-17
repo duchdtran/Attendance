@@ -18,12 +18,29 @@
     </group>
 
     <group
-        android:id="@+id/group_detail"
+        android:id="@+id/group_detail_meeting"
+        android:visible="false">
+        <item android:id="@+id/option_search_meeting"
+            android:title="Tìm kiếm"
+            android:icon="@drawable/ic_search"
+            app:showAsAction="collapseActionView|ifRoom"
+            app:actionViewClass="androidx.appcompat.widget.SearchView" />
+        <item android:id="@+id/option_attendee_meeting"
+            app:showAsAction="always"
+            android:title="Người tham dự"
+            android:icon="@drawable/ic_participants"/>
+    </group>
+    <group
+        android:id="@+id/group_detail_session"
         android:visible="false">
 
         <item android:id="@+id/option_scan"
             app:showAsAction="always"
             android:title="Scan QR Code"
             android:icon="@drawable/ic_scan"/>
+        <item android:id="@+id/option_attendee_session"
+            app:showAsAction="always"
+            android:title="Người tham dự"
+            android:icon="@drawable/ic_participants"/>
     </group>
 </menu>

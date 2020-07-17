@@ -69,7 +69,7 @@ public class SessionDetailActivity extends BaseActivity implements SessionDetail
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_menu, menu);
-        menu.setGroupVisible(R.id.group_detail, true);
+        menu.setGroupVisible(R.id.group_detail_session, true);
 
         return true;
     }

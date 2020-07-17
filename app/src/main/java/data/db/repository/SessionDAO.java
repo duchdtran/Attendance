@@ -150,7 +150,7 @@ public class SessionDAO {
 
     public ArrayList<SessionDto> getSessionByIdMeeting(int id) {
         ArrayList<SessionDto> arrayList = new ArrayList<>();
-        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_SESSION + " where " + DBHelper.COLUMN_MEETING_ID + "=" + id, null);
+        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_SESSION + " where " + DBHelper.COLUMN_MEETING_ID + "=" + id +" AND "+DBHelper.COLUMN_STATUS + " !=-1", null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 int sessionId = cursor.getInt(0);
@@ -192,7 +192,8 @@ public class SessionDAO {
     }
     public ArrayList<SessionDto> getSessionByDate(int day, int month, int year) {
         ArrayList<SessionDto> arrayList = new ArrayList<>();
-        String query = String.format("select * from %s where %s LIKE  '%04d-%02d-%02d%%'", DBHelper.TABLE_SESSION, DBHelper.COLUMN_TIME_START, year, month, day);
+        String query = String.format("select * from %s where %s like '%04d-%02d-%02d%%' AND %s !=-1", DBHelper.TABLE_SESSION, DBHelper.COLUMN_TIME_START, year, month, day, DBHelper.COLUMN_STATUS);
+        Log.e("AAA", query);
         Cursor cursor = mDatabase.rawQuery(query, null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -231,8 +232,7 @@ public class SessionDAO {
             }
             cursor.close();
             return arrayList;
-        }
-        return null;
+        } else return null;
     }
     public SessionDto getSessionByName(String name){
         Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_SESSION+" where " +DBHelper.COLUMN_SESSION_NAME +"='"+name+"'",null);

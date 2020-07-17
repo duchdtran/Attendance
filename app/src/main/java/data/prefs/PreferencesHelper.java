@@ -5,9 +5,11 @@ import data.model.app.UserDto;
 
 
 public interface PreferencesHelper {
-    public void setUser(UserDto user,String token);
+    public void setUser(UserDto user,String token, String roles);
+    public void setRoles(String roles);
     public void setToken(String token);
     public UserDto getUser();
+    public String getRoles();
     public String getToken();
     public void logout();
     public void setCreDateRecord(String date);

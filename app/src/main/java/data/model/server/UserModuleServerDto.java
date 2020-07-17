@@ -7,7 +7,7 @@ import data.model.app.ModuleDto;
 import data.model.app.UserDto;
 
 public class UserModuleServerDto implements Serializable {
-   
+
     private int userModuleID;
     private ModuleDto moduleDto;
     private UserDto userDto;

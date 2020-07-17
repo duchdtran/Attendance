@@ -153,7 +153,7 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 tvName.setText(tmp);
 
             }
-            if (sessionDto.getMeetingDto().getName() != null) {
+            if (sessionDto.getMeetingDto() != null && sessionDto.getMeetingDto().getName() != null) {
                 String nameM=sessionDto.getMeetingDto().getName();
                 String tmp="";
                 if(nameM.length()>30){
@@ -171,7 +171,7 @@ public class SessionAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             }
 
-            if (sessionDto.getRoomDto().getRoomName()!= null) {
+            if (sessionDto.getRoomDto()!=null && sessionDto.getRoomDto().getRoomName()!= null) {
                 String nameM=sessionDto.getRoomDto().getRoomName();
                 String tmp="";
                 if(nameM.length()>20){

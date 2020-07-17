@@ -67,7 +67,7 @@ public class MeetingDAO  {
     }
     public ArrayList<MeetingDto> getAllItems(){
         ArrayList<MeetingDto> arrayList = new ArrayList<>();
-        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_MEETING,null);
+        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_MEETING ,null);
         if(cursor!=null){
             while (cursor.moveToNext()){
                 int meetingId = cursor.getInt(0);
@@ -145,7 +145,7 @@ public class MeetingDAO  {
         else return null;
     }
     public MeetingDto getMeetingByName(String name){
-        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_MEETING+" where " +DBHelper.COLUMN_NAME_MEETING +"='"+name+"'",null);
+        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_MEETING+" where " +DBHelper.COLUMN_NAME_MEETING +"='"+name+"'" +" and "+DBHelper.COLUMN_STATUS+"=-1",null);
         if(cursor!=null&&cursor.moveToFirst()){
             int meetingId = cursor.getInt(0);
             String nameMeeting = cursor.getString(1);

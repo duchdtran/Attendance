@@ -16,6 +16,7 @@
 package ui.home.HomePage;
 
 
+import data.model.app.UserDto;
 import data.network.ApiHelper;
 import data.prefs.PreferencesHelper;
 import ui.base.BaseInteractor;
@@ -31,4 +32,13 @@ public class HomePageInteractor extends BaseInteractor
     }
 
 
+    @Override
+    public UserDto getDataUser() {
+        return getPreferencesHelper().getUser();
+    }
+
+    @Override
+    public String getRoles() {
+        return getPreferencesHelper().getRoles();
+    }
 }

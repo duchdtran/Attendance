@@ -51,7 +51,7 @@ public class RecordServerDto implements Serializable {
         return name;
     }
 
-    public RecordServerDto(int recordId, SessionDto sessionDto, String name, float length, String path, String status, String processingInfo, int creUID, String creDate, int modUID, String modDate) {
+    public RecordServerDto(int recordId, SessionDto sessionDto, String name, float length, String path, String status,String processingInfo, int creUID, String creDate, int modUID, String modDate) {
         this.recordId = recordId;
         this.sessionDto = sessionDto;
         this.name = name;

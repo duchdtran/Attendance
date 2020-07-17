@@ -10,6 +10,7 @@ import android.widget.TimePicker;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class TimeUltil {
     public static String getTimeStamp() {
@@ -30,7 +31,7 @@ public class TimeUltil {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
 
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(AppConstants.TIMESTAMP_FORMAT);
 
                         date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
                     }
@@ -42,5 +43,24 @@ public class TimeUltil {
 
         new DatePickerDialog(context, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
 
+    }
+    public static void showDateDialog(final EditText date_time_in, final Context context) {
+        final Calendar calendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                date_time_in.setText(simpleDateFormat.format(calendar.getTime()));
+            }
+        };
+
+        new DatePickerDialog(context, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+
+    }
+    public static boolean checkTimeEnd(String timeStart,String timeEnd){
+        return timeEnd.compareTo(timeStart) > 0;
     }
 }

@@ -15,6 +15,9 @@
 
 package ui.home.HomePage;
 
+import android.widget.TextView;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import ui.base.BasePresenter;
 
 /**
@@ -30,4 +33,10 @@ public class HomePagePresenter<V extends HomePageMvpView,
     }
 
 
+    @Override
+    public void setData(TextView name, TextView roles, CircleImageView avatarPath) {
+        name.setText(getInteractor().getDataUser().getFullName());
+        roles.setText("Chức vụ: " + getInteractor().getRoles());
+        //set avatar
+    }
 }

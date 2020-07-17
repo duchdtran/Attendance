@@ -64,7 +64,8 @@ public class CalendarFragment extends BaseFragment implements
                 tvListSesstion.setText(String.format("Lịch họp ngày %d tháng %d năm %d",day.getDay(), day.getMonth()+1, day.getYear()));
                 Log.i(getClass().getName(), "Selected Day: "
                         + day.getYear() + "/" + (day.getMonth() + 1) + "/" + day.getDay());
-                mPresenter.onViewPrepared(day.getYear(), (day.getMonth() + 1), day.getDay());
+                mPresenter.onViewPrepared(day.getDay(), (day.getMonth() + 1), day.getYear());
+                updateAdapter();
             }
 
             @Override

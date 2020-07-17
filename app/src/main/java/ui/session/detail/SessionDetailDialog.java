@@ -22,12 +22,13 @@ import androidx.fragment.app.DialogFragment;
 import com.ubnd.attendance.R;
 
 import data.model.app.SessionDto;
+import ui.attendee.AttendeeActivity;
 import ui.qrcode.ScanQRCodeActivity;
 
 public class SessionDetailDialog extends DialogFragment {
     Toolbar toolbar;
     TextView tvNameSession, tvNameMeeting, tvRoom, tvTimeStart, tvTimeEnd;
-    Button btn;
+    Button btnWifi, btnTakePhoto;
     CheckBox cbxWifi, cbxQRCode;
     View view;
     SessionDto sessionDto;
@@ -49,7 +50,8 @@ public class SessionDetailDialog extends DialogFragment {
     }
     void initView(){
         toolbar = view.findViewById(R.id.toolbar);
-        btn = view.findViewById(R.id.btn);
+        btnWifi = view.findViewById(R.id.btn_wifi);
+        btnTakePhoto = view.findViewById(R.id.btn_take_photo);
         cbxWifi = view.findViewById(R.id.cbx_wifi);
         cbxQRCode = view.findViewById(R.id.cbx_qrcode);
 
@@ -60,9 +62,11 @@ public class SessionDetailDialog extends DialogFragment {
         tvTimeEnd = view.findViewById(R.id.tv_time_end);
     }
     void setUp(){
-        tvNameMeeting.setText(sessionDto.getMeetingDto().getName());
+        if(sessionDto.getMeetingDto() != null)
+            tvNameMeeting.setText(sessionDto.getMeetingDto().getName());
         tvNameSession.setText(sessionDto.getName());
-        tvRoom.setText(sessionDto.getRoomDto().getRoomName());
+        if(sessionDto.getRoomDto() != null)
+            tvRoom.setText(sessionDto.getRoomDto().getRoomName());
         tvTimeStart.setText(sessionDto.getTimeStart());
         tvTimeEnd.setText(sessionDto.getTimeEnd());
 
@@ -81,14 +85,23 @@ public class SessionDetailDialog extends DialogFragment {
                 });
 
         toolbar.inflateMenu(R.menu.option_menu);
-        toolbar.getMenu().setGroupVisible(R.id.group_detail, true);
+        toolbar.getMenu().setGroupVisible(R.id.group_detail_session, true);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnWifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cbxWifi.setChecked(true);
             }
         });
+        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenAttendeeActivity();
+            }
+        });
     }
-
+    void OpenAttendeeActivity(){
+        Intent intent = AttendeeActivity.getStartIntent(getContext());
+        getContext().startActivity(intent);
+    }
 }

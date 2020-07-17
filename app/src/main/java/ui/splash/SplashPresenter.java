@@ -52,13 +52,14 @@ public class SplashPresenter<V extends SplashMvpView, I extends SplashMvpInterac
                         if ("success".equals(result)) {
                             JSONObject user = jsonObject.getJSONObject("user");
                             int userId = user.getInt("userId");
+                            String roles = "Admin";
                             String fullName = user.getString("fullName");
                             String email = user.getString("email");
                             String phone = user.getString("phone");
                             String address = user.getString("address");
                             String token = jsonObject.getString("token");
                             UserDto userDto = new UserDto(userId, fullName, email, phone, address);
-                            getInteractor().getPreferencesHelper().setUser(userDto, token);
+                            getInteractor().getPreferencesHelper().setUser(userDto, token, roles);
                             updateData();
                             getMvpView().openHomeActivity();
                         } else{

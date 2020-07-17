@@ -82,7 +82,7 @@ public class MeetingDetailActivity extends BaseActivity implements MeetingDetail
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option_menu, menu);
-        menu.setGroupVisible(R.id.group_detail, true);
+        menu.setGroupVisible(R.id.group_detail_meeting, true);
         final SearchView searchView = (SearchView) menu.findItem(R.id.option_search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -109,9 +109,6 @@ public class MeetingDetailActivity extends BaseActivity implements MeetingDetail
             case R.id.option_filter:
                 FilterDialog filterDialog = new FilterDialog();
                 filterDialog.show(getSupportFragmentManager(), "filter");
-                break;
-            case R.id.option_search:
-
                 break;
         }
         return true;

@@ -151,7 +151,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             }
 
-            if (sessionDto.getRoomDto().getRoomName()!= null) {
+            if (sessionDto.getRoomDto()!= null && sessionDto.getRoomDto().getRoomName()!= null) {
                 String nameM=sessionDto.getRoomDto().getRoomName();
                 String tmp="";
                 if(nameM.length()>20){
