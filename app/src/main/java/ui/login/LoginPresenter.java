@@ -48,7 +48,7 @@ public class LoginPresenter<V extends LoginMvpView, I extends LoginMvpInteractor
                         if ("success".equals(result)) {
                             JSONObject user = jsonObject.getJSONObject("user");
                             int userId = user.getInt("userId");
-                            String roles = "Admin";
+                            String roles = "Thư kí";
                             String fullName = user.getString("fullName");
                             String email = user.getString("email");
                             String phone = user.getString("phone");

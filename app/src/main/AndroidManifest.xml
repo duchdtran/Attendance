@@ -14,11 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="ui.attendee.AttendeeActivity"/>
         <activity android:name="ui.qrcode.ScanQRCodeActivity"/>
         <activity android:name="ui.meeting.MeetingActivity"/>
         <activity android:name="ui.meeting.detail.MeetingDetailActivity"/>
         <activity android:name="ui.session.SessionActivity"/>
-        <activity android:name="ui.session.detail.SessionDetailActivity"/>
         <activity android:name="ui.profile.ProfileActivity" />
         <activity android:name="ui.home.HomeActivity" />
         <activity android:name="ui.login.LoginActivity" />

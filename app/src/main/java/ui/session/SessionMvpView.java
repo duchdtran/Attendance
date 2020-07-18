@@ -11,6 +11,5 @@ public interface SessionMvpView extends MvpView {
     void initRecycle(List<SessionDto> sessionList);
     void updateAdapter();
 
-    void openSessionDetailActivity(int position);
     void openSessionDetailDialog(int position);
 }

@@ -144,7 +144,7 @@
                         android:layout_height="80dp"
                         android:layout_gravity="center"/>
                     <TextView
-                        android:text="Điểm danh"
+                        android:text="Bản ghi"
                         android:textSize="18sp"
                         android:textColor="#6f6f6f"
                         android:layout_marginTop="12dp"

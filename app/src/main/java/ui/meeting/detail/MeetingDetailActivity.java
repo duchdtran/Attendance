@@ -104,7 +104,7 @@ public class MeetingDetailActivity extends BaseActivity implements MeetingDetail
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 break;
             case R.id.option_filter:
                 FilterDialog filterDialog = new FilterDialog();
