@@ -180,7 +180,6 @@ public class AppApiHelper implements ApiHelper {
         Callback volley = new Callback() {
             @Override
             public void getRespone(Object response, int stt) {
-                Log.d("AAAM",response.toString());
                 List<MeetingDto> dtoList = JsonUltil.converToArr(response.toString(), MeetingDto[].class);
                 Log.d("sizemeeting",dtoList.size()+"");
                 if (dtoList != null) {
@@ -188,7 +187,7 @@ public class AppApiHelper implements ApiHelper {
                     for (int i = 0; i < dtoList.size(); i++) {
                         MeetingDto meetingDto = dtoList.get(i);
 
-                        meetingDto.setMeetingId(null);
+                        meetingDto.setMeetingId(dtoList.get(i).getMeetingId());
                         boolean tg = false;
                         if (meetingDto.getCreDate().equals(meetingDto.getModDate())) {
                             tg = SingletonDAO.getMeetingDAOInstance(context).addMeeting(meetingDto);
@@ -230,7 +229,6 @@ public class AppApiHelper implements ApiHelper {
                         SessionDto sessionDto = dtoList.get(i);
                         boolean tg = false;
                         if (sessionDto.getCreDate().equals(sessionDto.getModDate())) {
-                            sessionDto.setSessionId(null);
                             Log.d("namemeeting",sessionDto.getMeetingDto().getName());
                             MeetingDto meetingDto = SingletonDAO.getMeetingDAOInstance(context).getMeetingByName(sessionDto.getMeetingDto().getName());
                             if(meetingDto!=null)
@@ -491,8 +489,9 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public void createData(JSONObject jsonObject, Context context, final Callback volley, String url) {
+    public void createData(final JSONObject jsonObject, Context context, final Callback volley, String url) {
         final int[] statusCode = {0};
+        System.out.println(jsonObject);
         final RequestQueue requestQueue = SingletonVolley.getInstance(context).getRequestQueue();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -510,7 +509,7 @@ public class AppApiHelper implements ApiHelper {
                 String token = preferencesHelper.getToken();
                 Map<String, String> param = new HashMap<>();
                 param.put("Authorization", "Bearer " + token);
-                param.put("Content-Type", "application/json");
+                param.put("Content-Type", "application/json;charset=UTF-8");
                 return param;
             }
 
@@ -518,6 +517,13 @@ public class AppApiHelper implements ApiHelper {
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 statusCode[0] = response.statusCode;
                 return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                param.put("json", String.valueOf(jsonObject));
+                return param;
             }
         };
         requestQueue.add(jsonObjectRequest);

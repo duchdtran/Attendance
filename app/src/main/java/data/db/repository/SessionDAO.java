@@ -46,6 +46,7 @@ public class SessionDAO {
         if (!isExits(sessionDto.getName())){
             try {
                 ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.COLUMN_SESSION_ID,sessionDto.getSessionId());
                 contentValues.put(DBHelper.COLUMN_MEETING_ID, sessionDto.getMeetingDto().getMeetingId());
                 contentValues.put(DBHelper.COLUMN_SESSION_NAME, sessionDto.getName());
                 contentValues.put(DBHelper.COLUMN_ROOM_ID, sessionDto.getRoomDto().getRoomId());
@@ -150,7 +151,7 @@ public class SessionDAO {
 
     public ArrayList<SessionDto> getSessionByIdMeeting(int id) {
         ArrayList<SessionDto> arrayList = new ArrayList<>();
-        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_SESSION + " where " + DBHelper.COLUMN_MEETING_ID + "=" + id +" AND "+DBHelper.COLUMN_STATUS + " !=-1", null);
+        Cursor cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_SESSION + " where " + DBHelper.COLUMN_MEETING_ID + "=" + id + " and "+ DBHelper.COLUMN_STATUS + " !=-1", null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 int sessionId = cursor.getInt(0);

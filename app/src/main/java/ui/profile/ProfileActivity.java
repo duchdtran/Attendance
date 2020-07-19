@@ -120,7 +120,7 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
 
         if(requestCode == TAKE_PHOTO && resultCode == RESULT_OK){
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            new Recognize.AddPersonToGroup().execute(new ImageDto("Lê Anh Dũng", bitmap));
+            new Recognize.AddPersonToGroup().execute(new ImageDto(tvName.getText().toString(), bitmap));
             updateImage(bitmap);
         }
     }

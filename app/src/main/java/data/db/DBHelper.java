@@ -94,8 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_MOD_UID + " INTEGER"+ COMA_SEP+
             COLUMN_MOD_DATE + " TEXT )";
     //create table session
-    public static final String SQLITE_CREATE_TABLE_SESSION= "CREATE TABLE " + TABLE_SESSION + " ("+COLUMN_SESSION_ID +" INTEGER PRIMARY KEY " +
-            "AUTOINCREMENT" + COMA_SEP +
+    public static final String SQLITE_CREATE_TABLE_SESSION= "CREATE TABLE " + TABLE_SESSION + " ("+COLUMN_SESSION_ID +" INTEGER " + COMA_SEP +
             COLUMN_MEETING_ID + " INTEGER" + COMA_SEP +
             COLUMN_SESSION_NAME + " TEXT" + COMA_SEP +
             COLUMN_ROOM_ID + " INTEGER" + COMA_SEP +

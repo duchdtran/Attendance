@@ -4,11 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -57,7 +60,8 @@ public class SessionDetailDialog extends BaseDialogFragment implements SessionDe
 
     private String currentPhotoPath;
 
-
+    WifiManager wifiManager;
+    WifiInfo connection;
     RecyclerView recyclerView;
     ImageSessionAdapter adapter;
     public static final String TAG = "SessionActivity";
@@ -125,6 +129,12 @@ public class SessionDetailDialog extends BaseDialogFragment implements SessionDe
         btnWifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                wifiManager = (WifiManager)getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                connection = wifiManager.getConnectionInfo();
+
+                String display = "SSID: " +connection.getSSID() + "RSSI: " +connection.getRssi() + "Mac Address: " + connection.getMacAddress();
+
+                Toast.makeText(getContext(), display, Toast.LENGTH_SHORT).show();
                 cbxWifi.setChecked(true);
             }
         });
@@ -136,7 +146,7 @@ public class SessionDetailDialog extends BaseDialogFragment implements SessionDe
         });
 
 
-        setRoles(true );
+        setRoles(false );
     }
 
     void setRoles(boolean isSecretary){
