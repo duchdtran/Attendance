@@ -48,9 +48,6 @@ dependencies {
     //Circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //Rounded image
-    implementation 'com.makeramen:roundedimageview:2.3.0'
-
     //Collapsible calendar view
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3'
 
@@ -60,4 +57,7 @@ dependencies {
     //QR Code
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+
+    //Face detection
+    implementation 'com.github.eddydn:EDMTDevCognitiveFace:1.7'
 }

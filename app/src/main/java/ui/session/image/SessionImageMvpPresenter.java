@@ -13,18 +13,15 @@
  * limitations under the License
  */
 
-package ui.meeting;
+package ui.session.image;
 
 
 import android.content.Context;
 
 import ui.base.MvpPresenter;
 
-public interface MeetingMvpPresenter<V extends MeetingMvpView,
-        I extends MeetingMvpInteractor> extends MvpPresenter<V, I> {
-
+public interface SessionImageMvpPresenter<V extends SessionImageMvpView,
+        I extends SessionImageMvpInteractor> extends MvpPresenter<V, I> {
     void onViewPrepared();
-    void showDialogMeeting(Context context);
-    void showDialogFilter(Context context);
-    void importData(String path,int id,Context context);
+    void traning();
 }

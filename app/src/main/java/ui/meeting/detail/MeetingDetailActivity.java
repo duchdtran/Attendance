@@ -24,7 +24,6 @@ import data.model.app.SessionDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
-import ui.base.FilterDialog;
 import ui.session.SessionAdapter;
 
 public class MeetingDetailActivity extends BaseActivity implements MeetingDetailMvpView {
@@ -107,8 +106,7 @@ public class MeetingDetailActivity extends BaseActivity implements MeetingDetail
                 onBackPressed();
                 break;
             case R.id.option_filter:
-                FilterDialog filterDialog = new FilterDialog();
-                filterDialog.show(getSupportFragmentManager(), "filter");
+
                 break;
         }
         return true;

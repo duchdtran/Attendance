@@ -3,6 +3,11 @@ package ui.meeting;
 
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.ubnd.attendance.R;
 
 import java.util.List;
 
@@ -28,6 +33,14 @@ public class MeetingPresenter<V extends MeetingMvpView, I extends MeetingMvpInte
     @Override
     public void showDialogMeeting(Context context) {
 
+    }
+
+    @Override
+    public void showDialogFilter(Context context) {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_filter, null);
+        BottomSheetDialog dialog = new BottomSheetDialog(context);
+        dialog.setContentView(view);
+        dialog.show();
     }
 
     @Override

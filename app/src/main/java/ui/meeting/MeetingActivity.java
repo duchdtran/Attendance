@@ -22,7 +22,6 @@ import data.model.app.MeetingDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
-import ui.base.FilterDialog;
 import ui.meeting.detail.MeetingDetailActivity;
 
 public class MeetingActivity extends BaseActivity implements MeetingMvpView {
@@ -87,8 +86,7 @@ public class MeetingActivity extends BaseActivity implements MeetingMvpView {
                 finish();
                 break;
             case R.id.option_filter:
-                FilterDialog filterDialog = new FilterDialog();
-                filterDialog.show(getSupportFragmentManager(), "filter");
+                mPresenter.showDialogFilter(this);
                 break;
         }
         return true;

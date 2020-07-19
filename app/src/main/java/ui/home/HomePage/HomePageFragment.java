@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 
 import com.ubnd.attendance.R;
 
@@ -63,7 +62,7 @@ public class HomePageFragment extends BaseFragment implements
     }
 
     private void initView(){
-        imvAvatar = view.findViewById(R.id.imv_avatar);
+        imvAvatar = view.findViewById(R.id.imv_face);
         tvName = view.findViewById(R.id.tv_name);
         tvRoles = view.findViewById(R.id.tv_roles);
         cvMeeting = view.findViewById(R.id.cv_meeting);
@@ -83,7 +82,7 @@ public class HomePageFragment extends BaseFragment implements
     public void onClick(View v) {
         Intent intent = null;
         switch (v.getId()){
-            case R.id.imv_avatar:
+            case R.id.imv_face:
                 intent = ProfileActivity.getStartIntent(getContext());
                 break;
             case R.id.cv_meeting:

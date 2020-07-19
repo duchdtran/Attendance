@@ -1,5 +1,7 @@
 package data.model.app;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 import data.model.server.SessionServerDto;
@@ -15,5 +17,11 @@ public class SessionDto extends SessionServerDto implements Serializable {
 
     public SessionDto(Integer sessionId, MeetingDto meetingDto, String name, RoomDto roomDto, String timeStart, String timeEnd, String description, int status, int creUID, String creDate, int modUID, String modDate) {
         super(sessionId, meetingDto, name, roomDto, timeStart, timeEnd,description, status, creUID, creDate, modUID, modDate);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("%d %s %s", getSessionId(), getName(), getMeetingDto().getName());
     }
 }

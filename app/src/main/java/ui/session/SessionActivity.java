@@ -22,7 +22,6 @@ import data.model.app.SessionDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
-import ui.base.FilterDialog;
 import ui.session.detail.SessionDetailDialog;
 
 public class SessionActivity extends BaseActivity implements SessionMvpView {
@@ -87,8 +86,7 @@ public class SessionActivity extends BaseActivity implements SessionMvpView {
                 finish();
                 break;
             case R.id.option_filter:
-                FilterDialog filterDialog = new FilterDialog();
-                filterDialog.show(getSupportFragmentManager(), "filter");
+
                 break;
             case R.id.option_search:
 

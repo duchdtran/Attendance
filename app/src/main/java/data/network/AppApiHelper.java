@@ -104,7 +104,11 @@ public class AppApiHelper implements ApiHelper {
             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, url, jsonArray, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    volley.getRespone(response, stt);
+                    try {
+                        volley.getRespone(response, stt);
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override

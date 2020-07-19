@@ -1,6 +1,7 @@
 package ui.session.detail;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,29 +24,30 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ubnd.attendance.R;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import data.model.app.SessionDto;
+import data.network.AppApiHelper;
+import data.prefs.AppPreferencesHelper;
 import ui.attendee.AttendeeActivity;
-import ui.profile.ProfileActivity;
+import ui.base.BaseDialogFragment;
 import ui.qrcode.ScanQRCodeActivity;
-import ui.session.SessionAdapter;
+
+import ui.session.image.SessionImageActivity;
 
 import static android.app.Activity.RESULT_OK;
 
-public class SessionDetailDialog extends DialogFragment{
-    private static final int TAKE_PHOTO = 246;
+public class SessionDetailDialog extends BaseDialogFragment implements SessionDetailMvpView{
+
+    private final static int QRCODETAG = 23;
     Toolbar toolbar;
     TextView tvNameSession, tvNameMeeting, tvRoom, tvTimeStart, tvTimeEnd;
     Button btnWifi, btnTakePhoto;
@@ -57,6 +60,8 @@ public class SessionDetailDialog extends DialogFragment{
 
     RecyclerView recyclerView;
     ImageSessionAdapter adapter;
+    public static final String TAG = "SessionActivity";
+    SessionDetailMvpPresenter<SessionDetailMvpView, SessionDetailMvpInteractor> mPresenter;
 
     @NonNull
     @Override
@@ -69,6 +74,10 @@ public class SessionDetailDialog extends DialogFragment{
 
         Bundle bundle = getArguments();
         sessionDto = (SessionDto)bundle.getSerializable("session");
+
+        SessionDetailPresenter sessionPresenter = new SessionDetailPresenter<>(new SessionDetailInteractor((new AppPreferencesHelper(getContext())),new AppApiHelper(getContext())));
+        mPresenter = sessionPresenter;
+        mPresenter.onAttach(this);
         initView();
         setUp();
         return builder.create();
@@ -122,27 +131,12 @@ public class SessionDetailDialog extends DialogFragment{
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String filename = "photo";
-                File storageDirectory = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-                try {
-                    File imageFile = File.createTempFile(filename, ".png", storageDirectory);
-
-                    currentPhotoPath = imageFile.getAbsolutePath();
-
-                    Uri imageUri = FileProvider.getUriForFile(getContext(), "com.ubnd.attendance.fileprovider", imageFile);
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(intent, TAKE_PHOTO);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                OpenSessionImageActivity();
             }
         });
 
 
-        setRoles(true);
+        setRoles(true );
     }
 
     void setRoles(boolean isSecretary){
@@ -158,22 +152,14 @@ public class SessionDetailDialog extends DialogFragment{
             view.findViewById(R.id.container_attendee).setVisibility(View.VISIBLE);
         }
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == TAKE_PHOTO && resultCode == RESULT_OK){
-            Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-
-            updateImage(bitmap);
-        }
-    }
 
     void updateImage(Bitmap bitmap) {
         adapter.addItems(bitmap);
     }
 
-    void initRecycle(List<Bitmap> listImage) {
+    @Override
+    public void initRecycle(List<Bitmap> listImage) {
         recyclerView = view.findViewById(R.id.recycle_view);
         List<Bitmap> bitmapList = new ArrayList<>();
         adapter = new ImageSessionAdapter(bitmapList);
@@ -184,20 +170,51 @@ public class SessionDetailDialog extends DialogFragment{
         }
     }
 
-    void updateAdapter() {
+    @Override
+    public void updateAdapter() {
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
 
-    void OpenQRCodeActivity(){
+    @Override
+    public void OpenQRCodeActivity(){
+        Log.d("QRCode", sessionDto.toString());
         Intent intent = ScanQRCodeActivity.getStartIntent(getContext());
-        startActivity(intent);
+        startActivityForResult(intent, QRCODETAG);
     }
 
-    void OpenAttendeeActivity(){
+    @Override
+    public void OpenAttendeeActivity(){
         Intent intent = AttendeeActivity.getStartIntent(getContext());
         intent.putExtra("session", sessionDto);
         startActivity(intent);
     }
 
+    @Override
+    public void OpenSessionImageActivity() {
+        Intent intent = SessionImageActivity.getStartIntent(getContext());
+        intent.putExtra("session", sessionDto);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void setUp(View view) {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == QRCODETAG){
+            if(resultCode == RESULT_OK){
+                final String result = data.getStringExtra("qrcode");
+                if(result.equals(sessionDto.toString())){
+                    cbxQRCode.setChecked(true);
+                }else{
+                    Toast.makeText(getContext(), "Mã QR Code không đúng", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 }

@@ -14,6 +14,9 @@ public class SessionDetailPresenter<V extends SessionDetailMvpView, I extends Se
     }
 
 
+    @Override
+    public void checkQRCode(String qrcode) {
 
+    }
 }
 

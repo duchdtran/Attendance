@@ -23,6 +23,7 @@ import data.model.app.SessionDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseFragment;
+import ui.session.SessionAdapter;
 
 
 public class CalendarFragment extends BaseFragment implements
@@ -30,7 +31,7 @@ public class CalendarFragment extends BaseFragment implements
 
     TextView tvListSesstion;
     RecyclerView recyclerView;
-    CalendarAdapter adapter;
+    SessionAdapter adapter;
 
     public static final String TAG = "CalendarFragment";
     CalendarMvpPresenter<CalendarMvpView, CalendarMvpInteractor> mPresenter;
@@ -123,7 +124,7 @@ public class CalendarFragment extends BaseFragment implements
     @Override
     public void initRecycle(List<SessionDto> sessionList) {
         recyclerView = view.findViewById(R.id.recycle_view);
-        adapter = new CalendarAdapter(sessionList);
+        adapter = new SessionAdapter(sessionList);
         if (adapter != null) {
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

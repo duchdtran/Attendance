@@ -1,5 +1,6 @@
 package ui.qrcode;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,9 @@ public class ScanQRCodeActivity extends BaseActivity implements ScanQRCodeMvpVie
 
     @Override
     public void handleResult(Result rawResult) {
+        Intent intent = new Intent();
+        intent.putExtra("qrcode", rawResult.getText());
+        setResult(Activity.RESULT_OK, intent);
         onBackPressed();
     }
 

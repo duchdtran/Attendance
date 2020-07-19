@@ -20,8 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 
 import com.ubnd.attendance.R;
 
@@ -29,11 +28,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import data.model.ImageDto;
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
 import ui.base.BaseActivity;
 import ui.login.LoginActivity;
-import ui.session.SessionAdapter;
+import ultils.Recognize;
 
 
 public class ProfileActivity extends BaseActivity implements ProfileMvpView {
@@ -109,23 +109,8 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String filename = "photo";
-                requestPermission();
-                File storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-                try {
-                    File imageFile = File.createTempFile(filename, ".png", storageDirectory);
-
-                    currentPhotoPath = imageFile.getAbsolutePath();
-
-                    Uri imageUri = FileProvider.getUriForFile(ProfileActivity.this, "com.ubnd.attendance.fileprovider", imageFile);
-
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                    startActivityForResult(intent, TAKE_PHOTO);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, TAKE_PHOTO);
             }
         });
     }
@@ -134,8 +119,8 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == TAKE_PHOTO && resultCode == RESULT_OK){
-            Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            new Recognize.AddPersonToGroup().execute(new ImageDto("Lê Anh Dũng", bitmap));
             updateImage(bitmap);
         }
     }

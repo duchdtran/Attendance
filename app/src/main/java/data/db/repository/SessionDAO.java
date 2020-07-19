@@ -193,7 +193,6 @@ public class SessionDAO {
     public ArrayList<SessionDto> getSessionByDate(int day, int month, int year) {
         ArrayList<SessionDto> arrayList = new ArrayList<>();
         String query = String.format("select * from %s where %s like '%04d-%02d-%02d%%' AND %s !=-1", DBHelper.TABLE_SESSION, DBHelper.COLUMN_TIME_START, year, month, day, DBHelper.COLUMN_STATUS);
-        Log.e("AAA", query);
         Cursor cursor = mDatabase.rawQuery(query, null);
         if (cursor != null) {
             while (cursor.moveToNext()) {

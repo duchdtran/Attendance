@@ -66,6 +66,7 @@
             android:text="Danh sách người tham dự" />
 
         <TextView
+            android:id="@+id/tv_attendee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -73,6 +74,7 @@
             android:layout_marginRight="8dp"
             android:text="Tham dự"/>
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_attendee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"

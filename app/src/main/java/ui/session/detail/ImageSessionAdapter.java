@@ -58,13 +58,8 @@ public class ImageSessionAdapter  extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View view;
-
-        ImageView imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        ViewGroup.LayoutParams lp = new GridView.LayoutParams(300, 300);
-        imageView.setLayoutParams(lp);
-        return new ViewHolder(imageView);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false);
+        return new ImageSessionAdapter.ViewHolder(view);
     }
 
     @Override
@@ -94,21 +89,22 @@ public class ImageSessionAdapter  extends RecyclerView.Adapter<BaseViewHolder> {
         void onRepoEmptyViewRetryClick();
     }
     public class ViewHolder extends BaseViewHolder {
+        ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
+            imageView = itemView.findViewById(R.id.image_session);
         }
 
         @Override
         protected void clear() {
-            ((ImageView)itemView).setImageBitmap(null);
+            imageView.setImageBitmap(null);
         }
 
         public void onBind(final int position) {
             super.onBind(position);
             final Bitmap bitmap = bitmapList.get(position);
-            ((ImageView)itemView).setImageBitmap(bitmap);
+            imageView.setImageBitmap(bitmap);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

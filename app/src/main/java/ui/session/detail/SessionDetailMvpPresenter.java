@@ -20,6 +20,6 @@ import ui.base.MvpPresenter;
 
 public interface SessionDetailMvpPresenter<V extends SessionDetailMvpView,
         I extends SessionDetailMvpInteractor> extends MvpPresenter<V, I> {
-
+    void checkQRCode(String qrcode);
 
 }

@@ -14,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ubnd.attendance.R;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 import data.model.app.AttendeeDto;
+import data.model.app.MeetingDto;
 import ui.base.BaseViewHolder;
 
 
@@ -138,5 +142,46 @@ public class AttendeeAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-
+    public void filter(boolean isAttendee){
+        attendeeList.clear();
+        if(isAttendee){
+            for(AttendeeDto m: arr){
+                // tim kiem nguoi tham du
+                if(m.getStatus() != 0){
+                    attendeeList.add(m);
+                }
+            }
+        }
+        else{
+            for(AttendeeDto m: arr){
+                // tim kiem nguoi khong tham du
+                if(m.getStatus() == 0){
+                    attendeeList.add(m);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+    public void filter(String charText){
+        charText = charText .toLowerCase(Locale.getDefault());
+        charText = removeAccent(charText);
+        attendeeList.clear();
+        if(charText.length()==0){
+            attendeeList.addAll(arr);
+        }
+        else{
+            for(AttendeeDto m: arr){
+                // tim kiem theo thuoc tinh name
+                if(removeAccent(m.getSpeakerDto().getFullName().toLowerCase(Locale.getDefault())).contains(charText)){
+                    attendeeList.add(m);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+    public String removeAccent(String s){
+        String tmp = Normalizer.normalize(s,Normalizer.Form.NFD);
+        Pattern pattern =  Pattern.compile("\\p{InCOMBINING_DIACRITICAL_MARKS}+");
+        return pattern.matcher(tmp).replaceAll("");
+    }
 }
