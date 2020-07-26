@@ -2,6 +2,7 @@
 package ui.home.HomePage;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
+import com.bumptech.glide.Glide;
 import com.ubnd.attendance.R;
+
+import java.io.File;
 
 import data.network.AppApiHelper;
 import data.prefs.AppPreferencesHelper;
@@ -59,6 +63,7 @@ public class HomePageFragment extends BaseFragment implements
         cvStatistic.setOnClickListener(this);
 
         mPresenter.setData(tvName, tvRoles, imvAvatar);
+        Glide.with(this).load("Z:\\user\\c2a2b72d1e852146b3d539115c85f0fe.jpg").into(imvAvatar);
     }
 
     private void initView(){

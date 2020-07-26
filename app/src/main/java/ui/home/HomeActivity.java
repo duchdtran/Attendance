@@ -40,6 +40,7 @@ public class HomeActivity extends BaseActivity implements HomeMvpView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setUp();
+
     }
 
 
