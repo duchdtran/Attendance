@@ -28,6 +28,8 @@ public final class ApiEndPoint {
             + "/login-service";
 
     //update data
+    public static final String ENDPOINT_SERVER_UPDATE_IMAGE_USER = AppConstants.BASE_URL
+            + "/update-image-user";
     public static final String ENDPOINT_SERVER_UPDATE_RECORD = AppConstants.BASE_URL
             + "/update-record";
     public static final String ENDPOINT_SERVER_UPDATE_MEETING = AppConstants.BASE_URL
@@ -43,6 +45,9 @@ public final class ApiEndPoint {
     //upload audio
     public static final String ENDPOINT_SERVER_UPLOAD = AppConstants.BASE_URL
             + "/upload";
+    //upload image user
+    public static final String ENDPOINT_SERVER_UPLOAD_IMAGE_USER = AppConstants.BASE_URL
+            + "/upload/user/fileupload";
 
     //create data
     public static final String ENDPOINT_SERVER_CREATE_MEETING = AppConstants.BASE_URL

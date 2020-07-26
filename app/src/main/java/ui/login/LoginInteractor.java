@@ -54,5 +54,10 @@ public class LoginInteractor extends BaseInteractor
         getApiHelper().updateRecord(context,creDate);
     }
 
+    @Override
+    public void updateImageUser(Context context, String creDate) {
+        getApiHelper().updateImageUser(context,creDate);
+    }
+
 
 }

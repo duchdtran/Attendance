@@ -32,4 +32,5 @@ public interface LoginMvpInteractor extends MvpInteractor {
     public void updateMeeting(final Context context, final String creDate);
     public void updateSession(final Context context, final String creDate);
     public void updateRecord(final Context context, final String creDate);
+    public void updateImageUser(final Context context, final String creDate);
 }

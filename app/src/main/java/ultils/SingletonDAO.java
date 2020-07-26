@@ -4,6 +4,7 @@ import android.content.Context;
 
 import data.db.repository.AttendeeDAO;
 import data.db.repository.DutyDAO;
+import data.db.repository.ImageUserDAO;
 import data.db.repository.MeetingDAO;
 import data.db.repository.RecordDAO;
 import data.db.repository.RequestDAO;
@@ -15,6 +16,7 @@ import data.db.repository.SpeakerDAO;
 public class SingletonDAO {
     private static MeetingDAO meetingDAO=null;
     private static RecordDAO recordDAO=null;
+    private static ImageUserDAO imageUserDAO=null;
     private static RoomDAO roomDAO=null;
     private static SessionDAO sessionDAO=null;
     private static RequestDAO requestDAO=null;
@@ -31,6 +33,11 @@ public class SingletonDAO {
     public static RecordDAO getRecordDAOInstance(Context mContext) {
         if(recordDAO==null) recordDAO=new RecordDAO(mContext);
         return recordDAO;
+    }
+
+    public static ImageUserDAO getImageUserDAOInstance(Context mContext) {
+        if(imageUserDAO==null) imageUserDAO=new ImageUserDAO(mContext);
+        return imageUserDAO;
     }
 
     public static RoomDAO getRoomDAOInstance(Context mContext) {

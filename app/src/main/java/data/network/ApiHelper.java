@@ -3,6 +3,7 @@ package data.network;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import data.model.app.AttendeeDto;
+import data.model.app.ImageUserDto;
 import data.model.app.MeetingDto;
 import data.model.app.RecordDto;
 import data.model.app.RoomDto;
@@ -25,6 +27,8 @@ public interface ApiHelper {
       //update data
       boolean updateRecord(final Context context, final String creDate);
 
+      boolean updateImageUser(final Context context, final String creDate);
+
       boolean updateMeeting(final Context context, final String creDate);
 
       boolean updateSession(final Context context, final String creDate);
@@ -36,6 +40,8 @@ public interface ApiHelper {
       boolean updateRoom(final Context context, List<RoomDto> allRoom);
       //upload audio
       int uploadFile(final Context context, RecordDto recordDto, Map<String, String> params);
+
+      int uploadFileImage(final Context context, ImageUserDto imageUserDto, Map<String, String> params, Bitmap bitmap);
 
       //create and import data
       void createData(JSONObject jsonObject, final Context context, final Callback volley, String url);

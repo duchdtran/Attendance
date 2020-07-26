@@ -61,9 +61,10 @@ public class RequestDAO {
             while (cursor.moveToNext()){
                 Integer requestId = cursor.getInt(0);
                 Integer recordId = cursor.getInt(1);
+                Integer imageUserId = cursor.getInt(2);
                 Request m = new Request();
                 m.setIdRequest(requestId);
-                m.setRecord(SingletonDAO.getRecordDAOInstance(mcontext).getItemById(recordId));
+                m.setImageUserDto(SingletonDAO.getImageUserDAOInstance(mcontext).getItemById(imageUserId));
                 arrayList.add(m);
             }
             cursor.close();

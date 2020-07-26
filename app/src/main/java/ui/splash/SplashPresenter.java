@@ -98,13 +98,15 @@ public class SplashPresenter<V extends SplashMvpView, I extends SplashMvpInterac
         roomDAO.addRoom(r1);
         roomDAO.addRoom(r2);
         roomDAO.addRoom(r3);
-        String creDateRecord,creDateMeeting,creDateSession;
+        String creDateRecord,creDateMeeting,creDateSession,creDateImageUser;
         creDateMeeting = getInteractor().getPreferencesHelper().getCreDateMeeting();
         creDateSession = getInteractor().getPreferencesHelper().getCreDateSession();
         creDateRecord  = getInteractor().getPreferencesHelper().getCreDateRecord();
+        creDateImageUser = getInteractor().getPreferencesHelper().getCreDateImageUser();
         getInteractor().updateMeeting(context,creDateMeeting);
         getInteractor().updateSession(context,creDateSession);
         getInteractor().updateRecord(context,creDateRecord);
+        getInteractor().updateImageUser(context,creDateImageUser);
     }
 
 

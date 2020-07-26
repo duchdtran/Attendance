@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 
 import java.util.List;
 
+import data.model.app.ImageUserDto;
 import ui.base.MvpView;
 
 /**
@@ -30,6 +31,6 @@ public interface ProfileMvpView extends MvpView {
     void openLoginActivity();
 
     void updateImage(Bitmap bitmap);
-    void initRecycle(List<Bitmap> listImage);
+    void initRecycle(List<ImageUserDto> listImage);
     void updateAdapter();
 }

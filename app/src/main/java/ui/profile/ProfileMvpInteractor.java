@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 
+import data.model.app.ImageUserDto;
 import data.model.app.UserDto;
 import data.network.Callback;
 import ui.base.MvpInteractor;
@@ -32,5 +33,5 @@ import ui.base.MvpInteractor;
 public interface ProfileMvpInteractor extends MvpInteractor {
     public void logout();
     public UserDto getDataProfile();
-    ArrayList<Bitmap> getAllImage();
+    ArrayList<ImageUserDto> getAllImage();
 }

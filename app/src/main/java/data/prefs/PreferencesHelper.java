@@ -13,11 +13,13 @@ public interface PreferencesHelper {
     public String getToken();
     public void logout();
     public void setCreDateRecord(String date);
+    public void setCreDateImageUser(String date);
     public void setCreDateMeeting(String date);
     public void setCreDateSession(String date);
     public void setCreDateSpeaker(String date);
     public void setCreDateAttendee(String date);
     public String getCreDateRecord();
+    public String getCreDateImageUser();
     public String getCreDateMeeting();
     public String getCreDateSession();
     public String getCreDateSpeaker();

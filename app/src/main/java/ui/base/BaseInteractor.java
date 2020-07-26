@@ -65,6 +65,7 @@ public class BaseInteractor implements MvpInteractor {
         getApiHelper().updateRoom(context, SingletonDAO.getRoomDAOInstance(context).getAllItems());
         getApiHelper().updateSpeaker(context,getPreferencesHelper().getCreDateSpeaker());
         getApiHelper().updateMeeting(context,getPreferencesHelper().getCreDateMeeting());
+        getApiHelper().updateImageUser(context,getPreferencesHelper().getCreDateImageUser());
         new CountDownTimer(1000,100) {
             @Override
             public void onTick(long millisUntilFinished) {

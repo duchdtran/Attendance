@@ -16,18 +16,22 @@
 package ui.profile;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.ubnd.attendance.R;
 
 import java.util.ArrayList;
 
+import data.db.repository.ImageUserDAO;
+import data.model.app.ImageUserDto;
 import data.model.app.UserDto;
 import data.network.ApiHelper;
 import data.network.Callback;
 import data.prefs.PreferencesHelper;
 import ui.base.BaseInteractor;
 import ui.login.LoginMvpInteractor;
+import ultils.SingletonDAO;
 
 
 /**
@@ -37,8 +41,13 @@ import ui.login.LoginMvpInteractor;
 public class ProfileInteractor extends BaseInteractor
         implements ProfileMvpInteractor {
 
+    ImageUserDAO imageUserDAO;
+    Context context;
     public ProfileInteractor(PreferencesHelper preferencesHelper, ApiHelper apiHelper) {
         super(preferencesHelper, apiHelper);
+
+        this.context = context;
+        imageUserDAO = SingletonDAO.getImageUserDAOInstance(context);
     }
 
 
@@ -54,9 +63,8 @@ public class ProfileInteractor extends BaseInteractor
     }
 
     @Override
-    public ArrayList<Bitmap> getAllImage() {
-        ArrayList<Bitmap> listImage = new ArrayList<>();
-        return listImage;
+    public ArrayList<ImageUserDto> getAllImage() {
+        return imageUserDAO.getAllItems();
     }
 
 }

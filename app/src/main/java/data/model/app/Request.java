@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Request implements Serializable {
     private  Integer idRequest;
     private RecordDto record;
+    private ImageUserDto imageUserDto;
 
     public Request(RecordDto record) {
         this.record = record;
@@ -14,6 +15,15 @@ public class Request implements Serializable {
     public Request(Integer idRequest, RecordDto record) {
         this.idRequest = idRequest;
         this.record = record;
+    }
+
+    public Request(ImageUserDto imageUserDto) {
+        this.imageUserDto = imageUserDto;
+    }
+
+    public Request(Integer idRequest, ImageUserDto imageUserDto) {
+        this.idRequest = idRequest;
+        this.imageUserDto = imageUserDto;
     }
 
     public Request() {
@@ -33,5 +43,13 @@ public class Request implements Serializable {
 
     public void setRecord(RecordDto record) {
         this.record = record;
+    }
+
+    public ImageUserDto getImageUserDto() {
+        return imageUserDto;
+    }
+
+    public void setImageUserDto(ImageUserDto imageUserDto) {
+        this.imageUserDto = imageUserDto;
     }
 }

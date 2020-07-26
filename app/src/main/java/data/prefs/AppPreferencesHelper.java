@@ -16,6 +16,7 @@ public class AppPreferencesHelper implements PreferencesHelper{
     private static final String PREF_KEY_USER_TOKEN="token";
     private static final String PREF_KEY_USER_ROLES="roles";
     private static final String PREF_KEY_CREDATE_RECORD="record";
+    private static final String PREF_KEY_CREDATE_IMAGE_USER="image_user";
     private static final String PREF_KEY_CREDATE_MEETING="meeting";
     private static final String PREF_KEY_CREDATE_SESSION="session";
     private static final String PREF_KEY_CREDATE_SPEAKER="speaker";
@@ -93,6 +94,12 @@ public class AppPreferencesHelper implements PreferencesHelper{
     }
 
     @Override
+    public void setCreDateImageUser(String date) {
+        editor2.putString(PREF_KEY_CREDATE_IMAGE_USER,date);
+        editor2.apply();
+    }
+
+    @Override
     public void setCreDateMeeting(String date) {
         editor2.putString(PREF_KEY_CREDATE_MEETING,date);
         editor2.apply();
@@ -119,6 +126,11 @@ public class AppPreferencesHelper implements PreferencesHelper{
     @Override
     public String getCreDateRecord() {
         return prefs2.getString(PREF_KEY_CREDATE_RECORD,"2017-1-1 00:00:00");
+    }
+
+    @Override
+    public String getCreDateImageUser() {
+        return prefs2.getString(PREF_KEY_CREDATE_IMAGE_USER,"2017-1-1 00:00:00");
     }
 
     @Override

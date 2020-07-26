@@ -30,6 +30,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LENGT = "Lenght";
     public static final String COLUMN_PROCESSING_INFOR = "Processing_Infor";
     public static final String COLUMN_STATUS_APP= "Status_in_app";
+    //column of image_user table
+    public static final String TABLE_IMAGE_USER = "image_user";
+    public static final String COLUMN_IMAGE_USER_ID = "Image_user_id";
+    public static final String COLUMN_NAME_USER = "Name_user";
+    public static final String COLUMN_USER_ID = "User_id";
+    public static final String COLUMN_DATA = "Data";
     //column of session table
     public static final String TABLE_SESSION = "session";
     public static final String COLUMN_SESSION_NAME= "Name";
@@ -122,6 +128,20 @@ public class DBHelper extends SQLiteOpenHelper {
             COLUMN_MOD_UID + " INTEGER"+ COMA_SEP+
             COLUMN_MOD_DATE + " TEXT "+
             ")";
+    //create table image_user
+    public static final String SQLITE_CREATE_TABLE_IMAGE_USER = "CREATE TABLE " + TABLE_IMAGE_USER + " ("+ COLUMN_IMAGE_USER_ID +" INTEGER PRIMARY KEY " +
+            "AUTOINCREMENT" + COMA_SEP +
+            COLUMN_USER_ID + " INTEGER" + COMA_SEP +
+            COLUMN_NAME_USER + " TEXT" + COMA_SEP +
+            COLUMN_PATH + " TEXT" + COMA_SEP +
+            COLUMN_DATA + " TEXT"+ COMA_SEP +
+            COLUMN_CRE_UID + " INTEGER"+ COMA_SEP+
+            COLUMN_CRE_DATE + " TEXT"+ COMA_SEP+
+            COLUMN_MOD_UID + " INTEGER"+ COMA_SEP+
+            COLUMN_MOD_DATE + " TEXT "+
+            ")";
+
+
     public static final String SQLITE_CREATE_TABLE_ROOM = "CREATE TABLE " + TABLE_ROOM+ " ("+ COLUMN_ROOM_ID +" INTEGER PRIMARY KEY " +
             "AUTOINCREMENT" + COMA_SEP +
             COLUMN_ROOM_NAME + " TEXT" + COMA_SEP +
@@ -131,7 +151,8 @@ public class DBHelper extends SQLiteOpenHelper {
     //create table request
     public static final String SQLITE_CREATE_TABLE_REQUEST = "CREATE TABLE " + TABLE_REQUEST+ " ("+ COLUMN_REQUEST_ID +" INTEGER PRIMARY KEY " +
             "AUTOINCREMENT" + COMA_SEP +
-            COLUMN_RECORD_ID + " INTEGER" +
+            COLUMN_RECORD_ID + " INTEGER" + COMA_SEP +
+            COLUMN_IMAGE_USER_ID + " INTEGER" +
             ")";
 
     //create table duty
@@ -166,6 +187,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(SQLITE_CREATE_TABLE_SPEAKER);
         db.execSQL(SQLITE_CREATE_TABLE_DUTY);
         db.execSQL(SQLITE_CREATE_TABLE_ATTENDEE);
+        db.execSQL(SQLITE_CREATE_TABLE_IMAGE_USER);
     }
 
     @Override
@@ -181,6 +203,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ROOM);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REQUEST);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPEAKER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE_USER);
         onCreate(db);
     }
 }

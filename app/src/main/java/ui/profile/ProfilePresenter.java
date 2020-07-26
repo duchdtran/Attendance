@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import data.model.app.ImageUserDto;
 import data.model.app.SessionDto;
 import data.model.app.UserDto;
 import data.network.Callback;
@@ -39,7 +40,7 @@ public class ProfilePresenter<V extends ProfileMvpView, I extends ProfileMvpInte
 
     @Override
     public void onViewPrepared() {
-        List<Bitmap> listImage = getInteractor().getAllImage();
+        List<ImageUserDto> listImage = getInteractor().getAllImage();
         getMvpView().initRecycle(listImage);
     }
 

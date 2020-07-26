@@ -3,7 +3,9 @@ package data.network;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -20,10 +22,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import data.model.app.AttendeeDto;
+import data.model.app.ImageUserDto;
 import data.model.app.MeetingDto;
 import data.model.app.RecordDto;
 import data.model.app.RoomDto;
@@ -92,6 +97,7 @@ public class AppApiHelper implements ApiHelper {
     public boolean updateData(final Callback volley, final Context context, String creDate, final String s) {
         String url = "";
         if (s.equals("record")) url = ApiEndPoint.ENDPOINT_SERVER_UPDATE_RECORD;
+        else if (s.contains("data")) url = ApiEndPoint.ENDPOINT_SERVER_UPDATE_IMAGE_USER;
         else if (s.equals("meeting")) url = ApiEndPoint.ENDPOINT_SERVER_UPDATE_MEETING;
         else if (s.equals("session")) url = ApiEndPoint.ENDPOINT_SERVER_UPDATE_SESSION;
         else if (s.equals("speaker")) url = ApiEndPoint.ENDPOINT_SERVER_UPDATE_SPEAKER;
@@ -173,6 +179,46 @@ public class AppApiHelper implements ApiHelper {
             }
         };
         return updateData(volley, context, creDate, "record");
+    }
+
+    @Override
+    public boolean updateImageUser(final Context context, final String creDate) {
+        Callback volley = new Callback() {
+            @Override
+            public void getRespone(Object response, int stt) {
+                List<ImageUserDto> dtoList = JsonUltil.converToArr(response.toString(), ImageUserDto[].class);
+                if (dtoList != null) {
+                    String maxDate = creDate;
+                    for (int i = 0; i < dtoList.size(); i++) {
+                        ImageUserDto imageUserDto = dtoList.get(i);
+                        imageUserDto.setImageUserId(null);
+                        boolean tg = false;
+                        if (imageUserDto.getCreDate().equals(imageUserDto.getModDate())) {
+                            tg = SingletonDAO.getImageUserDAOInstance(context).addImageUser(imageUserDto);
+                            if (imageUserDto.getModDate().compareTo(maxDate) > 0)
+                                maxDate = imageUserDto.getModDate();
+
+                        } else {
+                            ImageUserDto imageUserDto1 = SingletonDAO.getImageUserDAOInstance(context).getItemByPath(imageUserDto.getPath());
+                            if (imageUserDto1 != null)
+                                SingletonDAO.getImageUserDAOInstance(context).updateImageUser(imageUserDto1);
+                            else
+                                tg = SingletonDAO.getImageUserDAOInstance(context).addImageUser(imageUserDto);
+                            if (imageUserDto.getModDate().compareTo(maxDate) > 0)
+                                maxDate = imageUserDto.getModDate();
+                        }
+                    }
+                    preferencesHelper.setCreDateImageUser(maxDate);
+                }
+            }
+
+            @Override
+            public void getError(Object error, int stt) {
+
+            }
+        };
+
+        return updateData(volley, context, creDate, "data");
     }
 
     @Override
@@ -475,6 +521,80 @@ public class AppApiHelper implements ApiHelper {
                     fileInputStream.close();
                     dos.flush();
                     dos.close();
+                } catch (MalformedURLException ex) {
+                    ex.printStackTrace();
+                    Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("Upload file to server Exception", "Exception : " + e.getMessage(), e);
+                }
+                return serverResponseCode;
+            }// End else block
+        }
+        return 0;
+    }
+    @SuppressLint("LongLogTag")
+    @Override
+    public int uploadFileImage(Context context, ImageUserDto imageUserDto, Map<String, String> params, Bitmap bitmap) {
+        Log.d("params",params.get("data"));
+        if (NetworkUtils.isNetworkConnected(context)) {
+            String token = preferencesHelper.getToken();
+            String upLoadServerUri = ApiEndPoint.ENDPOINT_SERVER_UPLOAD_IMAGE_USER;
+            HttpURLConnection conn = null;
+            int serverResponseCode = 0;
+            String path = root + imageUserDto.getPath();
+            File sourceFile = new File(path);
+            if (!sourceFile.isFile()) {
+                //Toast.makeText(context, "This is not exist!!!", Toast.LENGTH_SHORT).show();
+                return 0;
+
+            } else {
+                try {
+                    // open a URL connection to the Servlet
+                    FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                    URL url = new URL(upLoadServerUri);
+
+                    // Open a HTTP  connection to  the URL
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true); // Allow Inputs
+                    conn.setDoOutput(true); // Allow Outputs
+                    conn.setUseCaches(false); // Don't use a Cached Copy
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Connection", "Keep-Alive");
+                    conn.setRequestProperty("Content-Type", "application/json; utf-8");
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setRequestProperty("Authorization", "Bearer " + token);
+
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                    String jsonInputString = "ImageUser{" + "userID=" + 1 + ", nameUser=" + "Lê Anh Dũng" +
+                            ", data=" + encoded + '}';
+                    try(OutputStream os = conn.getOutputStream()) {
+                        byte[] input = jsonInputString.getBytes("utf-8");
+                        os.write(input, 0, input.length);
+                    }
+
+                    // Responses from the server (code and message)
+                    serverResponseCode = conn.getResponseCode();
+                    String serverResponseMessage = conn.getResponseMessage();
+                    Log.d("response1",serverResponseCode+" "+serverResponseMessage);
+                    if (serverResponseCode == 200) {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String inputLine;
+                        StringBuffer response = new StringBuffer();
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        System.out.println(response.toString());
+                        in.close();
+                    }
+                    //close the streams //
+                    fileInputStream.close();
                 } catch (MalformedURLException ex) {
                     ex.printStackTrace();
                     Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
