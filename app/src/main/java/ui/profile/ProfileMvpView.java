@@ -30,7 +30,7 @@ import ui.base.MvpView;
 public interface ProfileMvpView extends MvpView {
     void openLoginActivity();
 
-    void updateImage(Bitmap bitmap);
+    void updateImage(ImageUserDto image);
     void initRecycle(List<ImageUserDto> listImage);
     void updateAdapter();
 }

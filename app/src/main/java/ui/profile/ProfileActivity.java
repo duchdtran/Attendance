@@ -29,6 +29,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.ubnd.attendance.R;
 
 import org.json.JSONException;
@@ -37,6 +42,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +55,7 @@ import ui.base.BaseActivity;
 import ui.login.LoginActivity;
 import ultils.Recognize;
 import ultils.SingletonVolley;
+import ultils.TimeUltil;
 
 import static data.network.ApiEndPoint.ENDPOINT_SERVER_UPLOAD_IMAGE_USER;
 
@@ -57,6 +64,7 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
 
     private static final int REQUEST_PERMISSION_CODE = 21;
     public final static int TAKE_PHOTO = 276;
+    private StorageReference mStorageRef;
 
     Button btnLogout, btnAddImage;
     TextView tvName, tvEmail, tvAddress, tvPhone;
@@ -87,6 +95,7 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         ProfilePresenter profilePresenter =new ProfilePresenter<>(new ProfileInteractor(new AppPreferencesHelper(getApplicationContext()),new AppApiHelper(getApplicationContext())));
         mPresenter = profilePresenter;
         mPresenter.onAttach(ProfileActivity.this);
@@ -141,24 +150,53 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
         if(requestCode == TAKE_PHOTO && resultCode == RESULT_OK){
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
 
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream .toByteArray();
+            uploadFile(bitmap);
 
-            String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("userID",1);
-                jsonObject.put("nameUser","Lê Anh Dũng");
-                jsonObject.put("data",encoded);
-                postData(ENDPOINT_SERVER_UPLOAD_IMAGE_USER,jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            //new Recognize.AddPersonToGroup().execute(new ImageDto(tvName.getText().toString(), bitmap));
 
-            new Recognize.AddPersonToGroup().execute(new ImageDto(tvName.getText().toString(), bitmap));
-            updateImage(bitmap);
         }
+    }
+    public void uploadFile(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+        Calendar calendar = Calendar.getInstance();
+        final StorageReference reference = FirebaseStorage.getInstance().getReference()
+                .child("profileImage")
+                .child(tvName.getText().toString())
+                .child(calendar.getTimeInMillis() + ".jpeg");
+        reference.putBytes(baos.toByteArray())
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        getDownloadUrl(reference);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("TAG", "onFailure: ",e.getCause() );
+                    }
+                });
+    }
+    public void getDownloadUrl(StorageReference reference){
+        reference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d("TAG", "onSuccess: " + String.valueOf(uri));
+                        updateImage(new ImageUserDto(1, tvName.getText().toString(), String.valueOf(uri), "", 1, TimeUltil.getTimeStamp(),1, TimeUltil.getTimeStamp()));
+                        try {
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("userID",1);
+                            jsonObject.put("nameUser",tvName.getText().toString());
+                            jsonObject.put("path", String.valueOf(uri));
+                            postData(ENDPOINT_SERVER_UPLOAD_IMAGE_USER,jsonObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
     void requestPermission() {
         if (!(hasPermission(Manifest.permission.CAMERA))) {
@@ -180,8 +218,8 @@ public class ProfileActivity extends BaseActivity implements ProfileMvpView {
     }
 
     @Override
-    public void updateImage(Bitmap bitmap) {
-        //adapter.addItems(bitmap);
+    public void updateImage(ImageUserDto image) {
+        adapter.addItems(image);
     }
 
     @Override

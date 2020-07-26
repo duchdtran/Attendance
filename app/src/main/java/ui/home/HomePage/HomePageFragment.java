@@ -63,7 +63,6 @@ public class HomePageFragment extends BaseFragment implements
         cvStatistic.setOnClickListener(this);
 
         mPresenter.setData(tvName, tvRoles, imvAvatar);
-        Glide.with(this).load("Z:\\user\\c2a2b72d1e852146b3d539115c85f0fe.jpg").into(imvAvatar);
     }
 
     private void initView(){
